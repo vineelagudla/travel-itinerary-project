@@ -2,7 +2,14 @@
 
 {% block body %}
 <div>
-    <h2>Hi! {{fname}}</h2>
+    <h2>Welcome! {{fname}}</h2>
 </div>
-   
+
+<form action="/itinerary">
+    <div style= text-align:center>
+        <input type="submit" value="Create Itinerary"><br><br>
+    </div>
+</form>
 {% endblock %}
+
+

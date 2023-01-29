@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% block body%} 
+
+    <form action="/itinerary-form"> 
+    <b>
+        <div style= text-align:left>
+            Itinerary Name: <input type="text" name="itn_name" required><br><br>
+            Itinerary Location: <input type="text" name="itn_location"><br><br>
+            <label for="start">Start Date:</label>
+            <input type="date" id="start" name="start_date" value="yyyy-mm-dd"><br><br>
+            <label for="end">End Date:</label>
+            <input type="date" id="end" name="end_date" value="yyyy-mm-dd"><br><br>
+            <input type="submit" value="Create Itinerary">
+        </div>
+    </b>
+    </form>
+
+{% endblock %}

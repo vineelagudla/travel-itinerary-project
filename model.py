@@ -36,13 +36,12 @@ class Destination(db.Model):
                                autoincrement=True,
                                primary_key=True)
     destination_name = db.Column(db.String)
-    state = db.Column(db.String)
     dest_latitude = db.Column(db.Float)
     dest_longitude = db.Column(db.Float)
 
     #creating relationship between Destinations and Itinerary tables
 
-    itineraries  = db.relationship("Itinerary", back_populates="destination")
+    experiences  = db.relationship("Experience", back_populates="destination")
 
     def __repr__(self):
         #Show destination info
@@ -60,14 +59,13 @@ class Itinerary(db.Model):
                             primary_key=True)
     itinerary_name = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    destination_id = db.Column(db.Integer, db.ForeignKey('destinations.destination_id'))
+    location = db.Column(db.String)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
 
     #create a relationship with User, Destination and Experience tables
 
     user = db.relationship("User", back_populates="itineraries")
-    destination = db.relationship("Destination", back_populates="itineraries")
     experiences = db.relationship("Experience", back_populates="itinerary")
 
     def __repr__(self):
@@ -83,15 +81,15 @@ class Experience(db.Model):
     exp_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
+    exp_name = db.Column(db.String)
     exp_type = db.Column(db.String)
-    exp_date = db.Column(db.Date, nullable=False)
     itinerary_id = db.Column(db.Integer, db.ForeignKey('itineraries.itinerary_id'))
-    exp_latitude = db.Column(db.Float)
-    exp_longitude = db.Column(db.Float)
+    dest_id  = db.Column(db.Integer, db.ForeignKey('destinations.destination_id'))
 
     #creating relationship between Destinations and Itinerary tables
 
     itinerary  = db.relationship("Itinerary", back_populates="experiences")
+    destination  = db.relationship("Destination", back_populates="experiences")
 
     def __repr__(self):
         #Show experience information

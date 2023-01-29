@@ -15,5 +15,15 @@
     {% block body %}
       
     {% endblock %}
+
+    {% block logout %}
+
+    <form action="/logout">
+        <div style= text-align:center>
+            <input type="submit" value="Logout"> 
+        </div>
+    </form>
+
+  {% endblock %}
   </body>
 </html>
