@@ -1,7 +1,7 @@
 """Server for travel itinerary application."""
 
 from flask import (Flask, render_template, request, flash, session,
-                  redirect)
+                  redirect, jsonify)
 from model import connect_to_db, db
 import crud
 import yelp_api
@@ -108,7 +108,7 @@ def create_itinerary():
 
 @app.route("/itinerary-form")
 def itinerary_form():
-    #Fetch itinerary_details from the form and save it in db
+    #Fetch itinerary_details from the form and store it in db
     if "user" not in session or session["user"] == None:
         return redirect("/")
     
@@ -135,9 +135,14 @@ def search():
 
     itn_id = session["itinerary_id"]
 
-
     return render_template('search.html')
 
+@app.route("/search-results")
+def search_results():
+    location = request.args.get("location")
+    results = yelp_api.get_activities(location)
+
+    return jsonify(results)
 
 if __name__ == "__main__":
     #connect to db. Else, flask won't be able to access db.

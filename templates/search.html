@@ -2,12 +2,18 @@
 
 {% block body %}
 
-<form action="/search">
-    <div style= text-align:center>
-        <input type="text" name="location">
-        <input type="submit" value="Search"><br><br>
-    </div>
-</form>
+<div style= text-align:center>
+    <input id="search-location" type="text" name="location">
+    <button id="search-button">Search</button>
+    <br><br>
+</div>
+
+<div style= text-align:left>
+    <ul id="display-search">
+        
+    </ul>
+</div>
+<script src="/static/js/itinerary.js"></script>
 
 {% endblock %}
 

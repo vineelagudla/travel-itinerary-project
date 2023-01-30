@@ -14,5 +14,5 @@ def get_activities(location):
     }
     res = requests.get(url=url, params=params, headers=headers)
     res_dict = (res.json())
-    business = res_dict['businesses']
+    business = res_dict["businesses"]
     return business
