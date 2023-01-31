@@ -4,6 +4,7 @@ const searchButton = document.querySelector("#search-button");
 searchButton.addEventListener('click', () => {
     const searchLocation = document.querySelector("#search-location").value;
     const displaySearch = document.querySelector("#display-search");
+    displaySearch.innerHTML = "";
     const queryString = new URLSearchParams({ location: `${searchLocation}`}).toString();
     const url = `/search-results?${queryString}`;
 
@@ -40,6 +41,8 @@ searchButton.addEventListener('click', () => {
                             console.log(response);
                         });
                     });
+                    
                 }
             });
+    
 });
