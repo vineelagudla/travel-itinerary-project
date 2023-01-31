@@ -137,12 +137,29 @@ def search():
 
     return render_template('search.html')
 
+
+@app.route("/load-itinerary")
+def load_itinerary():
+
+    """User should be able to see their itineraries."""
+
+    exp_name = request.args.get("name")
+    reviews = request.args.get("reviews")
+    location = request.args.get("location")
+    latitude = request.args.get("latitude")
+    longitude = request.args.get("longitude")
+    itn_id = session["itinerary_id"]
+    crud.create_experience(exp_name, itn_id, location, latitude, longitude)
+
+    return jsonify([exp_name])
+
+
 @app.route("/search-results")
 def search_results():
     location = request.args.get("location")
     results = yelp_api.get_activities(location)
-
     return jsonify(results)
+
 
 if __name__ == "__main__":
     #connect to db. Else, flask won't be able to access db.

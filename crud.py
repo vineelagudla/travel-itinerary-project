@@ -31,13 +31,14 @@ def get_user_details(email):
 
 #create Destination function  
 
-def create_destination(destination_name, dest_latitude, dest_longitute):
+def create_destination(destination_name, dest_latitude, dest_longitude):
     """Create and return destination info."""
 
-    destination = Destination(destination_name=destination_name, 
-                                     dest_latitude=dest_latitude, 
-                                     dest_longitute=dest_longitute)
+    destination = Destination(destination_name = destination_name, dest_latitude= dest_latitude, dest_longitude = dest_longitude)
     
+    db.session.add(destination)
+    db.session.commit()
+
     return destination
 
 
@@ -70,9 +71,11 @@ def get_itinerary_details(itn_id):
 
 #create experience function
 
-def create_experience(exp_name, exp_type, itinerary_id, exp_latitude, exp_longitude):
+def create_experience(exp_name, itinerary_id, location, exp_latitude, exp_longitude):
 
-    experience = Experience(exp_name=exp_name,exp_type=exp_type)
+    destination = create_destination(location, exp_latitude, exp_longitude)
+
+    experience = Experience(exp_name=exp_name, itinerary_id=itinerary_id, dest_id= destination.destination_id)
 
     db.session.add(experience)
     db.session.commit()
