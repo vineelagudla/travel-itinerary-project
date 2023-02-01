@@ -1,9 +1,11 @@
 'use strict';
 
+//JS for displaying search results after clicking on search button.
 const searchButton = document.querySelector("#search-button");
 searchButton.addEventListener('click', () => {
     const searchLocation = document.querySelector("#search-location").value;
     const displaySearch = document.querySelector("#display-search");
+    //Empty search display panel before displaying new search results.
     displaySearch.innerHTML = "";
     const queryString = new URLSearchParams({ location: `${searchLocation}`}).toString();
     const url = `/search-results?${queryString}`;
@@ -40,9 +42,21 @@ searchButton.addEventListener('click', () => {
                         .then((response) => {
                             console.log(response);
                         });
-                    });
-                    
+                    }); 
                 }
+                displaySearch.insertAdjacentHTML('beforeend', `<button id="finish-itinerary">Finish</button><br><br>`);
+                const finishBtn = document.querySelector("#finish-itinerary");
+
+                finishBtn.addEventListener('click', () => {
+                    location.assign("/dashboard");
+                });
             });
-    
 });
+
+//JS for displaying assosicated user's list of Itineraries
+
+// const viewItineraryBtn = document.querySelector("view-itineary-btn");
+
+// viewItineraryBtn.addEventListener('click', () => {
+
+// });

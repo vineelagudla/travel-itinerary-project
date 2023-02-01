@@ -141,7 +141,7 @@ def search():
 @app.route("/load-itinerary")
 def load_itinerary():
 
-    """User should be able to see their itineraries."""
+    """User should be able to load the experience info in experiences and destinations tables."""
 
     exp_name = request.args.get("name")
     reviews = request.args.get("reviews")
@@ -152,6 +152,27 @@ def load_itinerary():
     crud.create_experience(exp_name, itn_id, location, latitude, longitude)
 
     return jsonify([exp_name])
+
+
+@app.route("/view-itineraries")
+def view_itineraries():
+
+    """User should be able to view their respective owned itineraries."""
+
+    user_id = session["user"]["user_id"]
+    itn_lst = crud.get_user_itineraries(user_id)
+
+    return render_template('view-itinerary.html', itn_lst=itn_lst)
+
+@app.route("/show_itinerary")
+def show_itinerary():
+
+    """Show the detailes of the selected itinerary"""
+
+    itn_id = request.args.get("itn_id")
+    itn_info = crud.get_itinerary_details(itn_id)
+
+    return render_template('show-itinerary.html', itn_info=itn_info)
 
 
 @app.route("/search-results")

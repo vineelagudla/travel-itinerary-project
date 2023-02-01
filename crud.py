@@ -55,7 +55,7 @@ def create_itinerary(itinerary_name, user_id, location, start_date, end_date):
 
     return itinerary
 
-#get itinerary details
+
 def get_itinerary_details(itn_id):
 
     itinerary = Itinerary.query.get(itn_id)
@@ -65,8 +65,39 @@ def get_itinerary_details(itn_id):
     itinerary_info["itn_location"] = itinerary.location
     itinerary_info["start_date"] = itinerary.start_date
     itinerary_info["end_date"] = itinerary.end_date
+    itinerary_info["experiences"] = []
+
+    experiences = Experience.query.filter(Experience.itinerary_id == itn_id).all()
+    for experience in experiences:
+        experience_info = {}
+        experience_info["exp_id"] = experience.exp_id
+        experience_info["exp_name"] = experience.exp_name
+        destination = Destination.query.get(experience.dest_id)
+        experience_info["dest_name"] = destination.destination_name
+        experience_info["dest_latitude"] = destination.dest_latitude
+        experience_info["dest_longitude"] = destination.dest_longitude
+
+        itinerary_info["experiences"].append(experience_info)
 
     return itinerary_info
+
+
+def get_user_itineraries(user_id):
+
+    user_itineraries = Itinerary.query.filter(Itinerary.user_id == user_id)
+
+    user_itineraries_lst = []
+
+    for user_itinerary in user_itineraries:
+        user_itinerary_info = {}
+
+        user_itinerary_info["itn_name"] = user_itinerary.itinerary_name
+
+        user_itinerary_info["itn_id"] = user_itinerary.itinerary_id
+
+        user_itineraries_lst.append(user_itinerary_info)
+    
+    return user_itineraries_lst
 
 
 #create experience function
@@ -82,6 +113,15 @@ def create_experience(exp_name, itinerary_id, location, exp_latitude, exp_longit
 
     return experience
 
+
+def get_experience_details(itn_id):
+
+    experience = Experience.query.get(itn_id)
+    destination = Destination.query.get(0)
+    experience_info = {}
+    experience_info["exp_name"] = experience.exp_name
+
+    return experience_info
 
 #To connect to db use the following code
 

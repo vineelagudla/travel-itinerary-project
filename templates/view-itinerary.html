@@ -4,8 +4,12 @@
 
 <div style= text-align:center>
     <div id="view-itinerary">
-        <p>{{name}}</p>
+        {% for itn in itn_lst %}
+        <a href="/show_itinerary?itn_id={{itn["itn_id"]}}">
+            <input type="button" value={{itn["itn_name"]}}><br><br>
+        </a>
+        {% endfor %}
+        
     </div>
 </div>
-
 {% endblock %}
