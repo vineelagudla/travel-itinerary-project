@@ -62,8 +62,9 @@ class Itinerary(db.Model):
     location = db.Column(db.String)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
+    share_to_public = db.Column(db.String)
 
-    #create a relationship with User, Destination and Experience tables
+    #create a relationship between User, Destination and Experience tables
 
     user = db.relationship("User", back_populates="itineraries")
     experiences = db.relationship("Experience", back_populates="itinerary")
@@ -83,6 +84,7 @@ class Experience(db.Model):
                         primary_key=True)
     exp_name = db.Column(db.String)
     exp_type = db.Column(db.String)
+    
     itinerary_id = db.Column(db.Integer, db.ForeignKey('itineraries.itinerary_id'))
     dest_id  = db.Column(db.Integer, db.ForeignKey('destinations.destination_id'))
 

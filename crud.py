@@ -20,11 +20,12 @@ def get_user_details(email):
 
     user = User.query.filter(User.email == email).first()
     user_info = {}
-    user_info["user_id"] = user.user_id
-    user_info["fname"] = user.fname
-    user_info["lname"] = user.lname
-    user_info["email"] = user.email
-    user_info["password"] = user.password
+    if user:
+        user_info["user_id"] = user.user_id
+        user_info["fname"] = user.fname
+        user_info["lname"] = user.lname
+        user_info["email"] = user.email
+        user_info["password"] = user.password
 
     return user_info
 
@@ -44,11 +45,11 @@ def create_destination(destination_name, dest_latitude, dest_longitude):
 
 #create Itinerary function
 
-def create_itinerary(itinerary_name, user_id, location, start_date, end_date):
+def create_itinerary(itinerary_name, user_id, location, start_date, end_date, share_itn):
 
     itinerary = Itinerary(itinerary_name=itinerary_name, user_id=user_id, 
                                 location=location, 
-                                start_date=start_date, end_date=end_date)
+                                start_date=start_date, end_date=end_date, share_to_public=share_itn)
 
     db.session.add(itinerary)
     db.session.commit()
@@ -59,6 +60,7 @@ def create_itinerary(itinerary_name, user_id, location, start_date, end_date):
 def get_itinerary_details(itn_id):
 
     itinerary = Itinerary.query.get(itn_id)
+
     itinerary_info = {}
 
     itinerary_info["itn_name"] = itinerary.itinerary_name
@@ -83,10 +85,10 @@ def get_itinerary_details(itn_id):
 
 
 def get_user_itineraries(user_id):
+    #Returns list of itinerary objects associated for the given user.
+    user_itineraries = Itinerary.query.filter(Itinerary.user_id == user_id).all()
 
-    user_itineraries = Itinerary.query.filter(Itinerary.user_id == user_id)
-
-    user_itineraries_lst = []
+    user_owned_itineraries = []
 
     for user_itinerary in user_itineraries:
         user_itinerary_info = {}
@@ -95,9 +97,9 @@ def get_user_itineraries(user_id):
 
         user_itinerary_info["itn_id"] = user_itinerary.itinerary_id
 
-        user_itineraries_lst.append(user_itinerary_info)
+        user_owned_itineraries.append(user_itinerary_info)
     
-    return user_itineraries_lst
+    return user_owned_itineraries
 
 
 #create experience function
@@ -114,14 +116,35 @@ def create_experience(exp_name, itinerary_id, location, exp_latitude, exp_longit
     return experience
 
 
-def get_experience_details(itn_id):
+def get_itinerary_count(user_id):
 
-    experience = Experience.query.get(itn_id)
-    destination = Destination.query.get(0)
-    experience_info = {}
-    experience_info["exp_name"] = experience.exp_name
+    shared_itineraries = Itinerary.query.filter(Itinerary.user_id == user_id).all()
 
-    return experience_info
+    return len(shared_itineraries)
+
+def get_shared_itineraries(user_id):
+
+    shared_itineraries = Itinerary.query.filter(Itinerary.user_id != user_id, Itinerary.share_to_public == 'on').all()
+
+    shared_itineraries_lst = []
+
+    for shared_itinerary in shared_itineraries:
+        shared_itinerary_info = {}
+
+        shared_itinerary_info["itn_name"] = shared_itinerary.itinerary_name
+
+        shared_itinerary_info["itn_id"] = shared_itinerary.itinerary_id
+
+        shared_itineraries_lst.append(shared_itinerary_info)
+
+    return shared_itineraries_lst
+
+
+def get_shared_itinerary_count(user_id):
+
+    shared_itineraries = Itinerary.query.filter(Itinerary.user_id != user_id, Itinerary.share_to_public == "on").all() 
+
+    return len(shared_itineraries)
 
 #To connect to db use the following code
 

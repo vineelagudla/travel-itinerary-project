@@ -6,7 +6,7 @@
     <div id="view-itinerary">
         {% for itn in itn_lst %}
         <a href="/show_itinerary?itn_id={{itn["itn_id"]}}">
-            <input type="button" value={{itn["itn_name"]}}><br><br>
+            <button type="button">{{itn["itn_name"]}}</button><br><br>
         </a>
         {% endfor %}
         

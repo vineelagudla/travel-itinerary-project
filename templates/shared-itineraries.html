@@ -1,0 +1,18 @@
+    {% extends 'base.html' %}
+
+{% block body %}
+
+<div style= text-align:center>
+    <div id="view-itinerary">
+       
+        {% for shared_itn in shared_itns %}
+        
+        <a href="/show_itinerary?itn_id={{shared_itn["itn_id"]}}">
+            <button type="button">{{shared_itn["itn_name"]}}</button><br><br>
+        </a>
+        {% endfor %}
+        
+    </div>
+</div>
+
+{% endblock %}

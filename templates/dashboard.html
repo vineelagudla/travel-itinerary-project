@@ -5,15 +5,32 @@
     <h2>Welcome! {{fname}}</h2>
 </div>
 
-<form action="/itinerary">
+<!-- Shows create itinerary button -->
+<form action="/create-itinerary">
     <div style= text-align:center>
-        <input type="submit" value="Create Itinerary"><br><br>
+        <input type="submit" value="Create New Itinerary"><br><br>
     </div>
 </form>
 
+<!-- View itineraries button -->
 <form action="/view-itineraries">
     <div style= text-align:center>
-        <button id="view-itineraries-btn">Show Itineraries</button><br><br>
+        {% if itn_count > 0 %}
+            <button id="view-itineraries-btn">View Owned Itineraries</button><br><br>
+        {% else %}
+        <button id="view-itineraries-btn" disabled>View Owned Itineraries</button><br><br>
+        {% endif %}
+    </div>
+</form>
+
+<!-- View shared itineraries button -->
+<form action="/shared-itineraries">
+    <div style= text-align:center>
+        {% if shared_itn_count > 0 %}
+            <button id="shared-itineraries-btn">View Shared Itineraries</button><br><br>
+        {% else %}
+        <button id="view-itineraries-btn" disabled>View Shared Itineraries</button><br><br>
+        {% endif %}
     </div>
 </form>
 {% endblock %}

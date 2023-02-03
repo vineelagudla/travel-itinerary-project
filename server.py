@@ -28,17 +28,31 @@ def homepage():
     return render_template('homepage.html')
 
 
-@app.route("/signin")
+@app.route("/signin", methods = ["POST"])
 def signin():
 
     """Allow user to login."""
     #TODO need to do user validitaion
-    email = request.args.get("email")
+    email = request.form.get("email")
+    password = request.form.get("password")
     user_info = crud.get_user_details(email)
-    session["user"] = user_info
-    session.modified = True
 
-    return redirect("/dashboard")
+    if(not user_info):
+         flash("User does not exist!") 
+
+         return redirect("/")
+
+    elif (email != user_info["email"] or password != user_info["password"]):
+         flash("You have entered incorrect password. Try again!") 
+
+         return redirect("/")
+
+    else:
+        flash("You have logged in succesfully!") 
+        session["user"] = user_info
+        session.modified = True
+
+        return redirect("/dashboard")
 
 
 @app.route("/signup")
@@ -68,20 +82,25 @@ def register():
     session.modified = True
 
     #After user registers, they should be redirected to dashboard
-
     return redirect("/dashboard")
 
 @app.route("/dashboard")
 def dashboard():
 
     """Allow user to view website Dashboard."""
-
+    
     if "user" not in session or session["user"] == None:
+
         return redirect("/")
     
     user = session["user"]
+    user_id = user["user_id"]
 
-    return render_template('dashboard.html', fname = user["fname"])
+    itn_count = crud.get_itinerary_count(user_id)
+
+    shared_itn_count = crud.get_shared_itinerary_count(user_id)
+
+    return render_template('dashboard.html', fname = user["fname"], itn_count=itn_count, shared_itn_count=shared_itn_count)
 
 
 @app.route("/logout")
@@ -95,7 +114,7 @@ def logout():
     return redirect("/")
 
 
-@app.route("/itinerary")
+@app.route("/create-itinerary")
 def create_itinerary():
 
     """Show itinerary landings page."""
@@ -103,7 +122,7 @@ def create_itinerary():
     if "user" not in session or session["user"] == None:
         return redirect("/")
  
-    return render_template('itinerary.html')
+    return render_template('create-itinerary.html')
 
 
 @app.route("/itinerary-form")
@@ -117,8 +136,9 @@ def itinerary_form():
     location = request.args.get("itn_location")
     start_date = request.args.get("start_date")
     end_date = request.args.get("end_date")
+    share_itn = request.args.get("share")
 
-    itn_id = crud.create_itinerary(itn_name, user_id, location, start_date, end_date).itinerary_id
+    itn_id = crud.create_itinerary(itn_name, user_id, location, start_date, end_date, share_itn).itinerary_id
     session["itinerary_id"] = itn_id
     session.modified = True
 
@@ -143,6 +163,7 @@ def load_itinerary():
 
     """User should be able to load the experience info in experiences and destinations tables."""
 
+    #Fetch exp and destination details from the search display results and store it in db
     exp_name = request.args.get("name")
     reviews = request.args.get("reviews")
     location = request.args.get("location")
@@ -162,17 +183,28 @@ def view_itineraries():
     user_id = session["user"]["user_id"]
     itn_lst = crud.get_user_itineraries(user_id)
 
-    return render_template('view-itinerary.html', itn_lst=itn_lst)
+    return render_template('view-itineraries.html', itn_lst=itn_lst)
 
 @app.route("/show_itinerary")
 def show_itinerary():
 
-    """Show the detailes of the selected itinerary"""
+    """Show the details of the selected itinerary"""
 
     itn_id = request.args.get("itn_id")
     itn_info = crud.get_itinerary_details(itn_id)
 
     return render_template('show-itinerary.html', itn_info=itn_info)
+
+
+@app.route("/shared-itineraries")
+def shared_itineraries():
+
+    """Show list of shared itineraries."""
+
+    user_id =session["user"]["user_id"]
+    shared_itns = crud.get_shared_itineraries(user_id)
+
+    return render_template('shared-itineraries.html', shared_itns=shared_itns)
 
 
 @app.route("/search-results")

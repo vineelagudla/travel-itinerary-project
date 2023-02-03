@@ -5,14 +5,19 @@
 <div style= text-align:left>
     <div id="show-itinerary">
         <h3>{{itn_info["itn_name"]}}</h3>
-        <b>Location: </b>{{itn_info["itn_location"]}}<br>
+        {% if itn_info["itn_location"] %}
+            <b>Location: </b>{{itn_info["itn_location"]}}<br>
+        {% endif %}
         <b>Start Date: </b>{{itn_info["start_date"]}}<br>
-        <b>End Date: </b>{{itn_info["end_date"]}}<br>
-        <b>Experiences: </b><br>
-        {% for experience in itn_info["experiences"] %}
-        <li>{{experience["exp_name"]}}</li>
-        {% endfor %}
-        
+        <b>End Date: </b>{{itn_info["end_date"]}}<br><br>
+
+        {% if itn_info["experiences"] | length > 0 %}
+            <b>Experiences: </b><br>
+            {% for experience in itn_info["experiences"] %}
+            <li>{{experience["exp_name"]}}</li>
+            {% endfor %}
+        {% endif %}
+       
     </div>
 </div>
 
