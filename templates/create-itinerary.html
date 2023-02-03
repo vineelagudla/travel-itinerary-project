@@ -4,19 +4,26 @@
     <form action="/itinerary-form"> 
     <b>
         <div style= text-align:left>
-            Itinerary Name: <input type="text" name="itn_name" required><br><br>
-            Itinerary Location: <input type="text" name="itn_location"><br><br>
-            <label for="start">Start Date:</label>
+            Itinerary Name <input type="text" name="itn_name" required><br><br>
+            <label for="start">Start Date </label>
             <input type="date" id="start" name="start_date" value="yyyy-mm-dd"><br><br>
-            <label for="end">End Date:</label>
+            <label for="end">End Date </label>
             <input type="date" id="end" name="end_date" value="yyyy-mm-dd"><br><br>
-            <input type="submit" value="Create Itinerary">
+            <p>Do you want to share your itinerary?</p>
+            <input type="radio" id="private" name="shareability" value="1" checked> 
+            <label for="private">Private</label>
+            <input type="radio" id="friends" name="shareability" value="2"> 
+            <label for="friends">Friends</label>
+            <input type="radio" id="public" name="shareability" value="3"> 
+            <label for="public">Public</label>
             <br><br>
-            <input type="checkbox" id="share" name="share" unchecked> 
-            <label for="share">Do you want to share your itinerary with public?</label>
+            <div id="friends-email"></div>
+            <br><br>
+            <input type="submit" value="Create Itinerary">
             <br><br>
         </div>
     </b>
     </form>
+    <script src="/static/js/shareability.js"></script>
 
 {% endblock %}

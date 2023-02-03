@@ -8,14 +8,12 @@ import yelp_api
 from jinja2 import StrictUndefined
 
 #configuring flask instance and jinja
-
 app = Flask(__name__)
 # Required to use Flask sessions
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
 #implementing flask routes
-
 @app.route("/")
 def homepage():
 
@@ -32,7 +30,7 @@ def homepage():
 def signin():
 
     """Allow user to login."""
-    #TODO need to do user validitaion
+
     email = request.form.get("email")
     password = request.form.get("password")
     user_info = crud.get_user_details(email)
@@ -104,11 +102,11 @@ def dashboard():
     user = session["user"]
     user_id = user["user_id"]
 
-    itn_count = crud.get_itinerary_count(user_id)
+    owned_itn_count = crud.get_itinerary_count(user_id)
+    public_itn_count = crud.get_public_itinerary_count(user_id)
+    friends_itn_count = crud.get_friends_itinerary_count(user_id)
 
-    shared_itn_count = crud.get_shared_itinerary_count(user_id)
-
-    return render_template('dashboard.html', fname = user["fname"], itn_count=itn_count, shared_itn_count=shared_itn_count)
+    return render_template('dashboard.html', fname = user["fname"], owned_itn_count=owned_itn_count, public_itn_count=public_itn_count, friends_itn_count=friends_itn_count)
 
 
 @app.route("/logout")
@@ -144,9 +142,14 @@ def itinerary_form():
     location = request.args.get("itn_location")
     start_date = request.args.get("start_date")
     end_date = request.args.get("end_date")
-    share_itn = request.args.get("share")
+    shareability = request.args.get("shareability")
+    friends_emails_ta = request.args.get("friends-email-ta")
 
-    itn_id = crud.create_itinerary(itn_name, user_id, location, start_date, end_date, share_itn).itinerary_id
+    friends_emails = []
+    if friends_emails_ta:
+        friends_emails = friends_emails_ta.split("\n")
+
+    itn_id = crud.create_itinerary(itn_name, user_id, location, start_date, end_date, shareability, friends_emails).itinerary_id
     session["itinerary_id"] = itn_id
     session.modified = True
 
@@ -205,19 +208,32 @@ def show_itinerary():
     return render_template('show-itinerary.html', itn_info=itn_info)
 
 
-@app.route("/shared-itineraries")
-def shared_itineraries():
+@app.route("/public-itineraries")
+def public_itineraries():
 
-    """Show list of shared itineraries."""
+    """Show list of public itineraries."""
 
     user_id =session["user"]["user_id"]
-    shared_itns = crud.get_shared_itineraries(user_id)
+    public_itns = crud.get_public_itineraries(user_id)
 
-    return render_template('shared-itineraries.html', shared_itns=shared_itns)
+    return render_template('shared-itineraries.html', shared_itns=public_itns)
+
+@app.route("/friends-itineraries")
+def friends_itineraries():
+
+    """Show list of friends itineraries."""
+
+    user_id =session["user"]["user_id"]
+    friends_itns = crud.get_friends_itineraries(user_id)
+
+    return render_template('shared-itineraries.html', shared_itns=friends_itns)
 
 
 @app.route("/search-results")
 def search_results():
+
+    """Responds to requests made in JS fetch function and returns search results in JSON format."""
+
     location = request.args.get("location")
     results = yelp_api.get_activities(location)
     return jsonify(results)
