@@ -3,6 +3,7 @@
 //JS for displaying search results after clicking on search button.
 const searchButton = document.querySelector("#search-button");
 searchButton.addEventListener('click', () => {
+    document.querySelector("#search-title").innerHTML = "Activities for";
     const searchLocation = document.querySelector("#search-location").value;
     const displaySearch = document.querySelector("#display-search");
     //Empty search display panel before displaying new search results.

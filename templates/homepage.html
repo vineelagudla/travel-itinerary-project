@@ -4,7 +4,7 @@
 
 <div>
     <h3>Login</h3>
-    
+
     {% with messages = get_flashed_messages() %}  
          {% if messages %}  
                {% for message in messages %}  
@@ -13,7 +13,7 @@
          {% endif %}  
       {% endwith %} 
 
-    <form action="/signin" method = "post" >  
+    <form action="/signin" method = "post">  
         Email <input type="text" name="email" required><br><br>
         Password <input type="password" name="password" required><br><br>
         <input type="submit" value="Sign In!">
@@ -26,5 +26,9 @@
         </div>
     </form>
 </div>
+
+{% endblock %}
+
+{% block logout %}
 
 {% endblock %}

@@ -48,7 +48,6 @@ def signin():
          return redirect("/")
 
     else:
-        flash("You have logged in succesfully!") 
         session["user"] = user_info
         session.modified = True
 
@@ -66,23 +65,32 @@ def signup():
 
     return render_template("signup.html") 
 
-@app.route("/register")
+@app.route("/register",methods = ["POST"])
 def register():
 
     """User should be redirected to dashboard after signing up."""
-    #TODO need to do user validitaion
-    fname = request.args.get("firstname")
-    lname = request.args.get("lastname")
-    email = request.args.get("new_email")
-    password = request.args.get("password")
+    
+    fname = request.form.get("firstname")
+    lname = request.form.get("lastname")
+    email = request.form.get("new_email")
+    password = request.form.get("password")
 
-    crud.create_user(fname, lname, email, password)
     user_info = crud.get_user_details(email)
-    session["user"] = user_info
-    session.modified = True
 
-    #After user registers, they should be redirected to dashboard
-    return redirect("/dashboard")
+    if(not user_info):
+        crud.create_user(fname, lname, email, password)
+        user_info = crud.get_user_details(email)
+
+        session["user"] = user_info
+        session.modified = True
+
+        #After user registers, they should be redirected to dashboard
+        return redirect("/dashboard")
+
+    else:
+        flash("Email already exists! Try a new one.") 
+
+        return redirect("/signup")
 
 @app.route("/dashboard")
 def dashboard():
@@ -154,8 +162,9 @@ def search():
         return redirect("/itinerary-form")
 
     itn_id = session["itinerary_id"]
+    itn_name = crud.get_itinerary_details(itn_id)["itn_name"]
 
-    return render_template('search.html')
+    return render_template('search.html',itn_name=itn_name)
 
 
 @app.route("/load-itinerary")
