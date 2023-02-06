@@ -26,26 +26,29 @@ searchButton.addEventListener('click', () => {
                 //storing all the required data in const variables that are returned from the fetch request in the form of dict of dicts 
                 const name = parsedResults[index]["name"];
                 const exp_url = parsedResults[index]["url"];
+                const image_url = parsedResults[index]["image_url"]
                 const reviews = parsedResults[index]["review_count"];
                 const location = parsedResults[index]["location"]["display_address"];
                 const latitude = parsedResults[index]["coordinates"]["latitude"];
                 const longitude = parsedResults[index]["coordinates"]["longitude"];
 
                 
-                displaySearch.insertAdjacentHTML('beforeend', `<b><a href=${exp_url} target="_blank">${name}</a><br></b>`);
+                displaySearch.insertAdjacentHTML('beforeend', `<b><a href=${exp_url} target="_blank">${name}</a><br><br></b>`);
+                displaySearch.insertAdjacentHTML('beforeend', `<img src=${image_url} width="300" height="300">`);
                 displaySearch.insertAdjacentHTML('beforeend', `<li>Reviews: ${reviews}</li>`);
                 displaySearch.insertAdjacentHTML('beforeend', `<li>Location: ${location}</li>`);
                 displaySearch.insertAdjacentHTML('beforeend', `<li>Latitude: ${latitude}</li>`);
                 displaySearch.insertAdjacentHTML('beforeend', `<li>Longitude: ${longitude}</li><br>`);
+
                 displaySearch.insertAdjacentHTML('beforeend', `<button id="add-itinerary-btn${index}">Add to Itinerary</button><br><br>`);
                 
                 const addItineraryBtn = document.querySelector(`#add-itinerary-btn${index}`);
-                console.log(addItineraryBtn);
+
                 addItineraryBtn.addEventListener("click", (evt) => {
                     const queryString = new URLSearchParams({name: `${name}`, location: `${location}`, latitude: `${latitude}`, longitude: `${longitude}`}).toString();
                     const url = `/load-itinerary?${queryString}`;
                     
-                    document.getElementById(`add-itinerary-btn${index}`).disabled = true;
+                    document.querySelector("#finish-itinerary").disabled = false;
 
                     fetch(url)
                     .then((response) => response.text())
@@ -54,11 +57,12 @@ searchButton.addEventListener('click', () => {
                     });
                 }); 
             }
-            displaySearch.insertAdjacentHTML('beforeend', `<button id="finish-itinerary">Finish</button><br><br>`);
-            const finishBtn = document.querySelector("#finish-itinerary");
 
+            displaySearch.insertAdjacentHTML('beforeend', `<button id="finish-itinerary">Finish</button><br><br>`);
+            const finishBtn = document.querySelector("#finish-itinerary");finishBtn.disabled = true;
+           
             finishBtn.addEventListener('click', () => {
-                location.assign("/dashboard");
+                location.assign("/view-itineraries");
             });
         });
 });

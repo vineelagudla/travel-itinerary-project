@@ -5,6 +5,7 @@ from flask import (Flask, render_template, request, flash, session,
 from model import connect_to_db, db
 import crud
 import yelp_api
+from pprint import pprint
 from jinja2 import StrictUndefined
 
 #configuring flask instance and jinja
@@ -236,6 +237,7 @@ def search_results():
 
     location = request.args.get("location")
     results = yelp_api.get_activities(location)
+    #pprint(results[0])
     return jsonify(results)
 
 

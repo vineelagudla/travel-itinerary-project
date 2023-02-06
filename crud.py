@@ -55,7 +55,7 @@ def create_itinerary(itinerary_name, user_id, location, start_date, end_date, sh
         create_itineraries_friends(itn_id, friends_emails)
 
     return itinerary
-
+#create associative table between users and itineraries table
 def create_itineraries_friends(itn_id, friends_emails):
     for friend_email in friends_emails:
         friend_email = friend_email.strip()

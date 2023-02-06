@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% for result in results %}
+<ul> 
+ <h3 style="text-align: left;"><b>{{result["name"]}}</b></h2>
+ <div style="text-align: left;"></div><img src = "{{result["image_url"]}}" width="400" 
+ height="300"/></div>
+ <li>Reviews: {{result["review_count"]}}</li>
+ <li>Location : {{result["location"]["display_address"]}}</li>
+ <li>Latitude: {{result["coordinates"]["latitude"]}}</li>
+ <li>Longitude: {{result["coordinates"]["longitude"]}}</li>
+</ul>
+{% endfor %}
+{% endblock %}

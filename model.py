@@ -17,7 +17,8 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
 
     #creating relationship with User and Itinerary tables
-    itineraries = db.relationship("Itinerary", secondary="itineraries_friends", back_populates="user")
+    friends_itineraries = db.relationship("Itinerary", secondary="itineraries_friends", back_populates="friends_users")
+    itineraries = db.relationship("Itinerary", back_populates="user")
 
     def __repr__(self):
         #Show user information
@@ -37,6 +38,7 @@ class Destination(db.Model):
 
     #creating relationship between Destinations and Itinerary tables
     experiences  = db.relationship("Experience", back_populates="destination")
+
 
     def __repr__(self):
         #Show destination info
@@ -59,8 +61,9 @@ class Itinerary(db.Model):
     shareability = db.Column(db.Integer)
 
     #create a relationship between User, Destination and Experience tables
-    user = db.relationship("User", secondary="itineraries_friends", back_populates="itineraries")
+    friends_users = db.relationship("User", secondary="itineraries_friends", back_populates="friends_itineraries")
     experiences = db.relationship("Experience", back_populates="itinerary")
+    user = db.relationship("User", back_populates="itineraries")
 
     def __repr__(self):
         #Show itinerary information
