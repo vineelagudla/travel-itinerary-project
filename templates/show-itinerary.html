@@ -12,13 +12,33 @@
         <b>End Date: </b>{{itn_info["end_date"]}}<br><br>
 
         {% if itn_info["experiences"] | length > 0 %}
+        
             <b>Experiences: </b><br>
             {% for experience in itn_info["experiences"] %}
-            <li>{{experience["exp_name"]}}</li>
+            <div id="show-itinerary{{experience["exp_id"]}}">
+            <ul>
+                <li><a href="{{experience["exp_url"]}}">{{experience["exp_name"]}}</a><br><br></li>
+                <img src = "{{experience["exp_image"]}}"  width="300" height="300"><br><br>
+                <button type="button" id="{{experience["exp_id"]}}" onclick="deleteExperience(id)">Delete</button><br><br>
+            </ul>
+        </div>
             {% endfor %}
         {% endif %}
        
     </div>
 </div>
+<script>
+    function deleteExperience(id) {
+        console.log(id);
+        document.querySelector("#show-itinerary"+id).innerHTML = "";
+        
+        const queryString = new URLSearchParams({ expId: `${id}`}).toString();
+        const url = `/delete-experience?${queryString}`;
 
+        fetch(url)
+            .then((response) => response.text())
+            .then((response) => {
+            });
+    }
+</script>
 {% endblock %}

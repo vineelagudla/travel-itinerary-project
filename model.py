@@ -106,6 +106,7 @@ class Experience(db.Model):
     destination  = db.relationship("Destination", back_populates="experiences")
 
     def __repr__(self):
+        """Returns printed representation of object"""
         #Show experience information
         return f'<Experience exp_id = {self.exp_id} exp_type = {self.exp_type}>' 
 

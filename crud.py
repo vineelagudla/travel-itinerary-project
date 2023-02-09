@@ -74,6 +74,7 @@ def get_itinerary_details(itn_id):
 
     itinerary_info = {}
 
+    itinerary_info["itn_id"] = itinerary.itinerary_id
     itinerary_info["itn_name"] = itinerary.itinerary_name
     itinerary_info["itn_location"] = itinerary.location
     itinerary_info["start_date"] = itinerary.start_date
@@ -85,6 +86,8 @@ def get_itinerary_details(itn_id):
         experience_info = {}
         experience_info["exp_id"] = experience.exp_id
         experience_info["exp_name"] = experience.exp_name
+        experience_info["exp_image"] = experience.exp_image
+        experience_info["exp_url"] = experience.exp_url
         destination = Destination.query.get(experience.dest_id)
         experience_info["dest_name"] = destination.destination_name
         experience_info["dest_latitude"] = destination.dest_latitude
@@ -166,12 +169,28 @@ def get_public_itinerary_count(user_id):
     return len(public_itineraries)
 
 
+#Delete itinerary
+def delete_itinerary(itn_id):
+
+    delete_itinerary = Itinerary.query.get(itn_id)
+
+    delete_itinerary_exp_lst = Experience.query.filter(Experience.itinerary_id == itn_id).all()
+
+    for delete_exp in delete_itinerary_exp_lst:
+        db.session.delete(delete_exp)
+        db.session.commit()
+        
+    db.session.delete(delete_itinerary)
+    db.session.commit()
+
+    return "Deleted"
+
 #create experience function
-def create_experience(exp_name, itinerary_id, location, exp_latitude, exp_longitude):
+def create_experience(exp_name, itinerary_id, location, exp_latitude, exp_longitude, exp_image, exp_url):
 
     destination = create_destination(location, exp_latitude, exp_longitude)
 
-    experience = Experience(exp_name=exp_name, itinerary_id=itinerary_id, dest_id= destination.destination_id)
+    experience = Experience(exp_name=exp_name, itinerary_id=itinerary_id, dest_id= destination.destination_id, exp_image=exp_image, exp_url=exp_url)
 
     db.session.add(experience)
     db.session.commit()
@@ -179,6 +198,19 @@ def create_experience(exp_name, itinerary_id, location, exp_latitude, exp_longit
     return experience
 
 
+def delete_experience(exp_id):
+
+    delete_itinerary = Experience.query.get(exp_id)
+
+    delete_itinerary_exp_lst = Experience.query.filter(Experience.exp_id == exp_id).all()
+
+    for delete_exp in delete_itinerary_exp_lst:
+        db.session.delete(delete_exp)
+        db.session.commit()
+
+    return "Experience Deleted"
+
+    
 #To connect to db use the following code
 if __name__ == '__main__':
     from server import app

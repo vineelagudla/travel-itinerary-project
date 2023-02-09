@@ -7,11 +7,22 @@
       {% block title %}reCreate Itinerary{% endblock %}
     </title>
     
-    <!-- {% block head %}{% endblock %} -->
+    {% block head %}{% endblock %}
     <link href="/static/css/travel-itinerary.css" rel="stylesheet">
   </head>
   <body>
     <h2>(re)Create Itinerary</h2>
+ 
+    {% block homebutton %}
+
+    <form action="/">
+      <div style= text-align:left>
+          <input type="submit" id="home-button" value="Home"><br><br> 
+      </div>
+    </form>
+
+    {% endblock %}
+
     {% block body %}
       
     {% endblock %}
@@ -23,7 +34,8 @@
             <input type="submit" value="Logout"> 
         </div>
     </form>
+  
+    {% endblock %}
 
-  {% endblock %}
   </body>
 </html>

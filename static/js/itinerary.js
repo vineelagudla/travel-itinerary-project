@@ -3,14 +3,16 @@
 //JS for displaying search results after clicking on search button.
 const searchButton = document.querySelector("#search-button");
 searchButton.addEventListener('click', () => {
-    document.querySelector("#search-title").innerHTML = "Activities for";
+    //document.querySelector("#search-title").innerHTML = "Activities for";
     const searchLocation = document.querySelector("#search-location").value;
+    const searchExperience = document.querySelector("#search-for-experience").value;
     const displaySearch = document.querySelector("#display-search");
+    
 
     //Empty search display panel before displaying new search results.
     displaySearch.innerHTML = "";
 
-    const queryString = new URLSearchParams({ location: `${searchLocation}`}).toString();
+    const queryString = new URLSearchParams({ location: `${searchLocation}`, experience: `${searchExperience}`}).toString();
     const url = `/search-results?${queryString}`;
 
     //Making a fetch request to server from DOM search textbox value and display the parsed data in the #display-search section of search.html page.
@@ -25,16 +27,16 @@ searchButton.addEventListener('click', () => {
 
                 //storing all the required data in const variables that are returned from the fetch request in the form of dict of dicts 
                 const name = parsedResults[index]["name"];
-                const exp_url = parsedResults[index]["url"];
-                const image_url = parsedResults[index]["image_url"]
+                const expUrl = parsedResults[index]["url"];
+                const imageUrl = parsedResults[index]["image_url"]
                 const reviews = parsedResults[index]["review_count"];
                 const location = parsedResults[index]["location"]["display_address"];
                 const latitude = parsedResults[index]["coordinates"]["latitude"];
                 const longitude = parsedResults[index]["coordinates"]["longitude"];
 
                 
-                displaySearch.insertAdjacentHTML('beforeend', `<b><a href=${exp_url} target="_blank">${name}</a><br><br></b>`);
-                displaySearch.insertAdjacentHTML('beforeend', `<img src=${image_url} width="300" height="300">`);
+                displaySearch.insertAdjacentHTML('beforeend', `<b><a href=${expUrl} target="_blank">${name}</a><br><br></b>`);
+                displaySearch.insertAdjacentHTML('beforeend', `<img src=${imageUrl} width="300" height="300">`);
                 displaySearch.insertAdjacentHTML('beforeend', `<li>Reviews: ${reviews}</li>`);
                 displaySearch.insertAdjacentHTML('beforeend', `<li>Location: ${location}</li>`);
                 displaySearch.insertAdjacentHTML('beforeend', `<li>Latitude: ${latitude}</li>`);
@@ -45,8 +47,10 @@ searchButton.addEventListener('click', () => {
                 const addItineraryBtn = document.querySelector(`#add-itinerary-btn${index}`);
 
                 addItineraryBtn.addEventListener("click", (evt) => {
-                    const queryString = new URLSearchParams({name: `${name}`, location: `${location}`, latitude: `${latitude}`, longitude: `${longitude}`}).toString();
+                    const queryString = new URLSearchParams({name: `${name}`,expUrl: `${expUrl}`, image: `${imageUrl}`,location: `${location}`, latitude: `${latitude}`, longitude: `${longitude}`}).toString();
                     const url = `/load-itinerary?${queryString}`;
+
+                    addItineraryBtn.disabled = true;
                     
                     document.querySelector("#finish-itinerary").disabled = false;
 

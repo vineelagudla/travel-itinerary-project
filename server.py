@@ -158,14 +158,19 @@ def itinerary_form():
 
 @app.route("/search")
 def search():
-
     if "user" not in session or session["user"] == None:
         return redirect("/")
 
     if "itinerary_id" not in session or session["itinerary_id"] == None:
         return redirect("/itinerary-form")
 
-    itn_id = session["itinerary_id"]
+    itn_id = request.args.get("itn_id")
+    if not itn_id:
+        itn_id = session["itinerary_id"] 
+    else:
+        session["itinerary_id"] = itn_id
+        session.modified = True
+        
     itn_name = crud.get_itinerary_details(itn_id)["itn_name"]
 
     return render_template('search.html',itn_name=itn_name)
@@ -182,8 +187,10 @@ def load_itinerary():
     location = request.args.get("location")
     latitude = request.args.get("latitude")
     longitude = request.args.get("longitude")
+    exp_image = request.args.get("image")
+    exp_url = request.args.get("expUrl")
     itn_id = session["itinerary_id"]
-    crud.create_experience(exp_name, itn_id, location, latitude, longitude)
+    crud.create_experience(exp_name, itn_id, location, latitude, longitude, exp_image, exp_url)
 
     return jsonify([exp_name])
 
@@ -235,10 +242,37 @@ def search_results():
 
     """Responds to requests made in JS fetch function and returns search results in JSON format."""
 
+    experience = request.args.get("experience")
     location = request.args.get("location")
-    results = yelp_api.get_activities(location)
+    results = yelp_api.get_activities(location, experience)
     #pprint(results[0])
     return jsonify(results)
+
+
+@app.route("/delete-itinerary")
+def delete_itinerary():
+
+   """Delete itinerary(s)."""
+   itn_id = request.args.get("itnId")
+   message = crud.delete_itinerary(itn_id)
+
+   return message 
+
+
+@app.route("/delete-experience")
+def delete_experience():
+    """Delete experience(s)."""
+    exp_id = request.args.get("expId")
+    message = crud.delete_experience(exp_id)
+
+    return message 
+
+@app.route("/edit-itinerary")
+def edit_itinerary():
+
+    """Edit user owned itinerary."""
+
+    return "hi"
 
 
 if __name__ == "__main__":

@@ -1,10 +1,27 @@
 {% extends  'base.html' %}
 
+{%block head %} 
+    <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .map,
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+{% endblock %}
+
 {% block body %}
 
 <div style= text-align:center>
-    <h2><span id="search-title">Search activities for </span> {{itn_name}} </h2>
-    <input id="search-location" type="text" name="location">
+    <!-- <h2><span id="search-title">Search activities for </span> {{itn_name}} </h2> -->
+    Search for <input id="search-for-experience" type="text" name="experience">
+    in <input id="search-location" type="text" name="location">
     <button id="search-button">Search</button>
     <br><br>
 </div>
@@ -14,6 +31,18 @@
        
     </ul>
 </div>
+
+<!--Display map on search page-->
+<section class="map">
+    <div id="map"></div>
+</section>
+
+<script src="/static/js/maps.js"></script>
+
+<script
+  async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8shp8cAjba_mcAFX7ArPc6ZXcRLxfgsQ&callback=initMap">
+</script>
 
 <script src="/static/js/itinerary.js"></script>
 
