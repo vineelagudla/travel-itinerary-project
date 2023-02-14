@@ -18,5 +18,9 @@ body {
       margin-left: auto;
       margin-right: auto;
     }
-    
+
+.card {
+  height: 500px;
+
+}
 

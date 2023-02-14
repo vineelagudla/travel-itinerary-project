@@ -2,40 +2,41 @@
 {% block body%} 
 
     <form action="/itinerary-form"> 
-    <b>
-        <div style= text-align:left>
-            Itinerary Name <input type="text" name="itn_name" required><br><br>
+        <b>
+            <div style= text-align:left>
+                Itinerary Name <input type="text" name="itn_name" required><br><br>
 
-            <label for="start">Start Date </label>
-            <input type="date" id="start" name="start_date"  value="yyyy-mm-dd"><br><br>
-            <label for="end">End Date </label>
-            <input type="date" id="end" name="end_date" value="yyyy-mm-dd"><br><br>
-            <script>
-                date = new Date();
-                year = date.getFullYear();
-                month = date.getMonth() + 1; // Month starts from 0
-                day = date.getDate();
-                if(month < 10) month = "0" + month;
-                if(day < 10) day = "0" + day;
-                today = year + "-" + month + "-" + day;
-                document.getElementById("start").setAttribute('min', today);
-                document.getElementById("end").setAttribute('min', today);
-            </script>
+                <label for="start">Start Date </label>
+                <input type="date" id="start" name="start_date"  value="yyyy-mm-dd"><br><br>
+                <label for="end">End Date </label>
+                <input type="date" id="end" name="end_date" value="yyyy-mm-dd"><br><br>
+                
+                <script>
+                    date = new Date();
+                    year = date.getFullYear();
+                    month = date.getMonth() + 1; // Month starts from 0
+                    day = date.getDate();
+                    if(month < 10) month = "0" + month;
+                    if(day < 10) day = "0" + day;
+                    today = year + "-" + month + "-" + day;
+                    document.getElementById("start").setAttribute('min', today);
+                    document.getElementById("end").setAttribute('min', today);
+                </script>
 
-            <p>Do you want to share your itinerary?</p>
-            <input type="radio" id="private" name="shareability" value="1" checked> 
-            <label for="private">Private</label>
-            <input type="radio" id="friends" name="shareability" value="2"> 
-            <label for="friends">Friends</label>
-            <input type="radio" id="public" name="shareability" value="3"> 
-            <label for="public">Public</label>
-            <br><br>
-            <div id="friends-email"></div>
-            <br><br>
-            <input type="submit" value="Create Itinerary">
-            <br><br>
-        </div>
-    </b>
+                <p>Do you want to share your itinerary?</p>
+                <input type="radio" id="private" name="shareability" value="1" checked> 
+                <label for="private">Private</label>
+                <input type="radio" id="friends" name="shareability" value="2"> 
+                <label for="friends">Friends</label>
+                <input type="radio" id="public" name="shareability" value="3"> 
+                <label for="public">Public</label>
+                <br><br>
+                <div id="friends-email"></div>
+                <br><br>
+                <input type="submit" value="Create Itinerary">
+                <br><br>
+            </div>
+        </b>
     </form>
     <script src="/static/js/shareability.js"></script>
 
