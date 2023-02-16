@@ -9,12 +9,25 @@ headers = {
     'accept': 'application/json'
 }
 
+
 def get_activities(location, experience):
     params = {
         'location': location,
         'term': experience
+
     }
     res = requests.get(url=url, params=params, headers=headers)
     res_dict = (res.json())
     business = res_dict["businesses"]
     return business
+
+reviews_url = "https://api.yelp.com/v3/businesses/TQEfj1-QhyWCJ29u3l9Kjw/reviews"
+
+def get_business_info(location):
+    params = {
+       
+    }
+    res = requests.get(url=reviews_url, params=params, headers=headers)
+    res_dict = (res.json())
+    #business = res_dict["businesses"]
+    return res_dict

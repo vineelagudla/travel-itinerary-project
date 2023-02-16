@@ -1,58 +1,73 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>
-      {% block title %}reCreate Itinerary{% endblock %}
-    </title>
-    
-    {% block head %}{% endblock %}
 
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
-      crossorigin="anonymous"
-    />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>
+    {% block title %}reCreate Itinerary{% endblock %}
+  </title>
 
-    <link href="/static/css/travel-itinerary.css" rel="stylesheet">
-  </head>
-  <body>
-    <h2>(re)Create Itinerary</h2>
- 
-    {% block homebutton %}
+  {% block head %}{% endblock %}
 
-    <form action="/">
-      <div style= text-align:left>
-          <input type="submit" id="home-button" value="Home"><br><br> 
-      </div>
-    </form>
-
-    {% endblock %}
-
-    {% block body %}
-      
-    {% endblock %}
-
-    {% block logout %}
-
-    <form action="/logout">
-        <div style= text-align:center>
-            <input type="submit" value="Logout"> 
-        </div>
-    </form>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
   
-    {% endblock %}
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
 
-    <!-- Bootstrap JavaScript Bundle -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Random Color JavaScript Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js"></script>
-  </body>
+
+  <link href="/static/css/travel-itinerary.css" rel="stylesheet">
+</head>
+
+<body>
+  <h2>(re)Create Itinerary</h2>
+
+  {% block homebutton %}
+
+  <form action="/">
+    <div style=text-align:left>
+      <input type="submit" id="home-button" value="Home"><br><br>
+    </div>
+  </form>
+
+  {% endblock %}
+
+  {% block userprofile %}
+
+  <form action="/user-profile">
+    <div style=text-align:right>
+      <button class="user-profile">Profile</button><br><br>
+    </div>
+  </form>
+
+  {% endblock %}
+
+  {% block body %}
+
+  {% endblock %}
+
+  {% block logout %}
+
+  <form action="/logout">
+    <div style=text-align:center>
+      <input type="submit" value="Logout">
+    </div>
+  </form>
+
+  {% endblock %}
+
+  {% block js %}
+  {% endblock %}
+
+  <!-- Bootstrap JavaScript Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+  <!-- Random Color JavaScript Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js"></script>
+</body>
+
 </html>

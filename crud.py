@@ -79,6 +79,7 @@ def get_itinerary_details(itn_id):
     itinerary_info["itn_location"] = itinerary.location
     itinerary_info["start_date"] = itinerary.start_date
     itinerary_info["end_date"] = itinerary.end_date
+    itinerary_info["user_id"] =itinerary.user_id
     itinerary_info["experiences"] = []
 
     experiences = Experience.query.filter(Experience.itinerary_id == itn_id).all()

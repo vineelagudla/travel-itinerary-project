@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
+<!-- {% block js%}
+
+<body>
+    <div id="root"></div>
+    <script type="text/jsx" src="/static/js/travelNotes.jsx"></script>
+</body>
+
+{% endblock %} -->
+
 {% block body %}
 
 <div style= text-align:left>
@@ -11,6 +20,10 @@
         <b>Start Date: </b>{{itn_info["start_date"]}}<br>
         <b>End Date: </b>{{itn_info["end_date"]}}<br><br>
 
+        <div id="root">
+            
+        </div>
+
         {% if itn_info["experiences"] | length > 0 %}
         
             <b>Experiences: </b><br>
@@ -19,7 +32,10 @@
             <ul>
                 <li><a href="{{experience["exp_url"]}}">{{experience["exp_name"]}}</a><br><br></li>
                 <img src = "{{experience["exp_image"]}}"  width="300" height="300"><br><br>
+
+                {% if itn_owner %}
                 <button type="button" id="{{experience["exp_id"]}}" onclick="deleteExperience(id)">Delete</button><br><br>
+                {% endif %}
             </ul>
         </div>
             {% endfor %}
@@ -41,4 +57,7 @@
             });
     }
 </script>
+
+<script type="text/jsx" src="/static/js/travelNotes.jsx"></script>
 {% endblock %}
+

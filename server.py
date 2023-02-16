@@ -7,6 +7,7 @@ import crud
 import yelp_api
 from pprint import pprint
 from jinja2 import StrictUndefined
+import json
 
 #configuring flask instance and jinja
 app = Flask(__name__)
@@ -51,6 +52,19 @@ def signin():
         session.modified = True
 
         return redirect("/dashboard")
+
+
+@app.route("/user-profile")
+def user_profile():
+
+    """User profile details"""
+
+    if "user" in session and session["user"] != None:
+        fname = session["user"]["fname"]
+        lname = session["user"]["lname"]
+        email = session["user"]["email"]
+
+    return render_template("user-profile.html", fname=fname, lname=lname, email=email)
 
 
 @app.route("/signup")
@@ -106,8 +120,10 @@ def dashboard():
     owned_itn_count = crud.get_itinerary_count(user_id)
     public_itn_count = crud.get_public_itinerary_count(user_id)
     friends_itn_count = crud.get_friends_itinerary_count(user_id)
+    lname = session["user"]["lname"]
+    email = session["user"]["email"]
 
-    return render_template('dashboard.html', fname = user["fname"], owned_itn_count=owned_itn_count, public_itn_count=public_itn_count, friends_itn_count=friends_itn_count)
+    return render_template('dashboard.html', fname = user["fname"], owned_itn_count=owned_itn_count, public_itn_count=public_itn_count, friends_itn_count=friends_itn_count, lname=lname, email=email)
 
 
 @app.route("/logout")
@@ -210,10 +226,15 @@ def show_itinerary():
 
     """Show the details of the selected itinerary"""
 
+    itn_owner = False
+    user_id = session["user"]["user_id"]
     itn_id = request.args.get("itn_id")
     itn_info = crud.get_itinerary_details(itn_id)
+    itn_user_id = itn_info["user_id"]
 
-    return render_template('show-itinerary.html', itn_info=itn_info)
+    if(itn_user_id == user_id):
+        itn_owner = True
+    return render_template('show-itinerary.html', itn_info=itn_info, itn_owner=itn_owner)
 
 
 @app.route("/public-itineraries")
@@ -225,6 +246,27 @@ def public_itineraries():
     public_itns = crud.get_public_itineraries(user_id)
 
     return render_template('shared-itineraries.html', shared_itns=public_itns)
+
+@app.route("/public-itineraries-list")
+def public_itineraries_list():
+
+    """Show list of public itineraries."""
+
+    user_id =session["user"]["user_id"]
+    public_itns = crud.get_public_itineraries(user_id)
+
+    return jsonify(public_itns)
+
+@app.route("/get-experiences-carousel")
+def get_experiences_carousel():
+
+    """Show list of public itineraries."""
+
+    itn_id = request.args.get("itnId")
+    print(itn_id)
+    itinerary_info = crud.get_itinerary_details(itn_id)
+
+    return jsonify(itinerary_info)
 
 @app.route("/friends-itineraries")
 def friends_itineraries():
@@ -245,7 +287,8 @@ def search_results():
     experience = request.args.get("experience")
     location = request.args.get("location")
     results = yelp_api.get_activities(location, experience)
-    #pprint(results[0])
+    reviews = yelp_api.get_business_info(location)
+    print(json.dumps(reviews))
     return jsonify(results)
 
 
@@ -273,6 +316,12 @@ def edit_itinerary():
     """Edit user owned itinerary."""
 
     return "hi"
+
+
+@app.route("/travel-notes")
+def travel_notes():
+
+    return redirect("show-itinerary.html")
 
 
 if __name__ == "__main__":
