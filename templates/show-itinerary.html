@@ -42,65 +42,66 @@
 
                 <input type="submit" value="Submit">
             </form>
-            <script>
-                function handleChangeScheduled(radioState) {
-                    const queryString = new URLSearchParams({ scheduled_state: `${radioState.value}` }).toString();
-                    const experience_state_url = `/get-experiences-filter?${queryString}`;
-                    fetch(experience_state_url)
-                        .then((response) => response.json())
-                        .then((expInfoResultsJson) => {
-                            console.log(expInfoResultsJson);
-                            loadExperiences(expInfoResultsJson);
-                        });
-                }
-
-                function loadExperiences(experiences) {
-                    experienceList = document.querySelector("#experience-list");
-                    experienceList.innerHTML = "";
-                    for(const experience of experiences) {
-                        console.log(experience["exp_id"]);
-                        experienceList.insertAdjacentHTML('beforeend', `
-                        <div id="show-itinerary${experience["exp_id"]}">
-                            <ul>
-                                <li><a href="${experience["exp_url"]}">${experience["exp_name"]}</a><br><br></li>
-                                <img src="${experience["exp_image"]}" width="300" height="300"><br><br>
-
-                                {% if itn_owner %}
-                                <button type="button" id="${experience["exp_id"]}"
-                                    onclick="deleteExperience(id)">Delete</button><br><br>
-                                <button type="button" id="${experience["exp_id"]}" onclick="scheduleExperience(id)">Schedule
-                                    experience</button>
-                                {% endif %}
-                            </ul>
-                        </div>`
-                        );
-                    }
-                }
-
-                function scheduleExperience(id) {
-                    console.log("Hi Hazel: " + id);
-                }
-            </script>
+            
         </div>
         <div id="experience-list">
-            {% for experience in itn_info["experiences"] %}
-            <div id="show-itinerary{{experience["exp_id"]}}">
-                <ul>
-                    <li><a href="{{experience["exp_url"]}}">{{experience["exp_name"]}}</a><br><br></li>
-                    <img src="{{experience["exp_image"]}}" width="300" height="300"><br><br>
 
-                    {% if itn_owner %}
-                    <button type="button" id="{{experience["exp_id"]}}"
-                        onclick="deleteExperience(id)">Delete</button><br><br>
-                    <button type="button" id="{{experience["exp_id"]}}" onclick="scheduleExperience(id)">Schedule
-                        experience</button>
-                    {% endif %}
-                </ul>
-            </div>
-            {% endfor %}
         </div>
         
         {% endif %}
+
+        <script>
+            function handleChangeScheduled(radioState) {
+                loadExperiences(radioState.value);
+            }
+
+            function loadExperiences(scheduledState) {
+                const queryString = new URLSearchParams({ scheduled_state: `${scheduledState}` }).toString();
+                const experience_state_url = `/get-experiences-filter?${queryString}`;
+                fetch(experience_state_url)
+                    .then((response) => response.json())
+                    .then((expInfoResultsJson) => {
+                        experienceList = document.querySelector("#experience-list");
+                        experienceList.innerHTML = "";
+                        for(const experience of expInfoResultsJson) {
+                            console.log(experience["exp_id"]);
+                            experienceList.insertAdjacentHTML('beforeend', `
+                            <div id="show-itinerary${experience["exp_id"]}">
+                                <ul>
+                                    <li><a href="${experience["exp_url"]}">${experience["exp_name"]}</a><br><br></li>
+                                    <img src="${experience["exp_image"]}" width="300" height="300"><br><br>
+
+                                    {% if itn_owner %}
+                                    <button type="button" id="${experience["exp_id"]}"
+                                        onclick="deleteExperience(id)">Delete</button><br><br>
+                                    <button type="button" id="${experience["exp_id"]}" onclick="scheduleExperience(id)">Schedule
+                                        experience</button>
+                                    
+                                    <input type="date" id="schedule" name="schedule" value="yyyy-mm-dd"><br><br>
+                                    
+                                    {% endif %}
+                                </ul>
+                            </div>`
+                            );
+                        }
+                    });
+                
+            }
+
+            function scheduleExperience(id) {
+                scheduledDate = document.querySelector("#schedule");
+                console.log(id);
+                const queryString = new URLSearchParams({ exp_id: `${id}`, schedule_date: `${scheduledDate.value}` }).toString();
+                const experience_state_url = `/schedule-experience?${queryString}`;
+                fetch(experience_state_url)
+                    .then((response) => response.text())
+                    .then((scheduledExpResult) => {
+                        console.log("Experience scheduled");
+                    });
+            }
+
+            loadExperiences("all");
+        </script>
 
     </div>
 </div>

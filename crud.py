@@ -225,12 +225,20 @@ def get_experiences(itn_id, exp_scheduled_state):
     for experience in experiences:
         experience_details = {}
         experience_details["exp_id"] = experience.exp_id
+        experience_details["exp_name"] = experience.exp_name
         experience_details["exp_url"] = experience.exp_url
         experience_details["exp_image"] = experience.exp_image
         experience_details["schedule"] = experience.schedule
         experience_info.append(experience_details)
 
     return experience_info
+
+def schedule_experience(exp_id, schedule):
+    experience = Experience.query.get(exp_id)
+    experience.schedule = schedule
+
+    db.session.add(experience)
+    db.session.commit()
 
 
 def delete_experience(exp_id):

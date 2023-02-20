@@ -39,12 +39,19 @@ def signin():
     user_info = crud.get_user_details(email)
     hashed_password = user_info["password"]
 
+    # TODO: use password hash only
+    verified_password = False
+    try:
+        verified_password = argon2.verify(password, hashed_password)
+    except ValueError as ve:
+        verified_password = password == user_info["password"]
+
     if (not user_info):
         flash("User does not exist!")
 
         return redirect("/")
 
-    elif (email != user_info["email"] or not argon2.verify(password, hashed_password)):
+    elif email != user_info["email"] or not verified_password:
 
         flash("You have entered incorrect password. Try again!")
 
@@ -254,6 +261,15 @@ def get_experiences_filter():
 
     return jsonify(experience_info)
 
+@app.route("/schedule-experience")
+def schedule_experience():
+
+    exp_id = request.args.get("exp_id")
+    schedule = request.args.get("schedule_date")
+    crud.schedule_experience(exp_id, schedule)
+
+    return ""
+
 @app.route("/public-itineraries")
 def public_itineraries():
     """Show list of public itineraries."""
@@ -389,8 +405,7 @@ def copy_itinerary():
     return render_template('show-itinerary.html', itn_info=itn_info, itn_owner=itn_owner)
     
     #itn_lst = crud.get_user_itineraries(user_id)
-
-    return "hi"
+    
     #render_template('show-itinerary.html', )
     #return redirect('view-itineraries')
     #return render_template('view-itineraries.html', itn_lst=itn_lst)
