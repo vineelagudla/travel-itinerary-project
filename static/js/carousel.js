@@ -29,7 +29,6 @@ fetch(url)
                         const image = itnInfo["experiences"][0]["exp_image"];
                         if (image != null) imgUrl = image;
                         destintation = (itnInfo["experiences"][0]["dest_name"]).split(",");
-                        console.log(destintation);
                         destintation = destintation[destintation.length - 2];
                     }
 

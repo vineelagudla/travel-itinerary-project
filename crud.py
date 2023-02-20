@@ -66,6 +66,16 @@ def create_itineraries_friends(itn_id, friends_emails):
             db.session.add(itineraries_friends)
             db.session.commit()
 
+def update_notes(itn_id, notes):
+    itinerary = Itinerary.query.filter(Itinerary.itinerary_id == itn_id).first()
+    itinerary.notes = notes
+
+    db.session.add(itinerary)
+    db.session.commit()
+
+def get_notes(itn_id):
+    itinerary = Itinerary.query.filter(Itinerary.itinerary_id == itn_id).first()
+    return itinerary.notes
 
 #Gets itinerary information from db to display the details of the selected itinerary 
 def get_itinerary_details(itn_id):
@@ -197,6 +207,30 @@ def create_experience(exp_name, itinerary_id, location, exp_latitude, exp_longit
     db.session.commit()
 
     return experience
+
+
+def get_experiences(itn_id, exp_scheduled_state):
+    experience_info = []
+
+    print(exp_scheduled_state)
+
+    experiences = []
+    if exp_scheduled_state == "scheduled":
+        experiences = Experience.query.filter(Experience.itinerary_id == itn_id, Experience.schedule != None).all()
+    elif exp_scheduled_state == "all":
+        experiences = Experience.query.filter(Experience.itinerary_id == itn_id).all()
+    elif exp_scheduled_state == "not_scheduled":
+        experiences = Experience.query.filter(Experience.itinerary_id == itn_id, Experience.schedule == None).all()
+
+    for experience in experiences:
+        experience_details = {}
+        experience_details["exp_id"] = experience.exp_id
+        experience_details["exp_url"] = experience.exp_url
+        experience_details["exp_image"] = experience.exp_image
+        experience_details["schedule"] = experience.schedule
+        experience_info.append(experience_details)
+
+    return experience_info
 
 
 def delete_experience(exp_id):

@@ -11,44 +11,105 @@
 
 {% block body %}
 
-<div style= text-align:left>
+<div style=text-align:left>
     <div id="show-itinerary">
         <h3>{{itn_info["itn_name"]}}</h3>
         {% if itn_info["itn_location"] %}
-            <b>Location: </b>{{itn_info["itn_location"]}}<br>
+        <b>Location: </b>{{itn_info["itn_location"]}}<br>
         {% endif %}
         <b>Start Date: </b>{{itn_info["start_date"]}}<br>
         <b>End Date: </b>{{itn_info["end_date"]}}<br><br>
 
         <div id="root">
-            
+
         </div>
 
         {% if itn_info["experiences"] | length > 0 %}
+
+        <b>Experiences: </b><br><br>
+        <div class="fliter-experiences">
+            Filter by<br><br>
         
-            <b>Experiences: </b><br>
+            <form>
+                <input type="radio" id="scheduled" name="scheduled_state" value="scheduled" onclick='handleChangeScheduled(this);'>
+                <label for="scheduled">Scheduled Experiences</label><br>
+
+                <input type="radio" id="all" name="scheduled_state" value="all" checked="true" onclick='handleChangeScheduled(this);'>
+                <label for="all">All Experiences</label><br>
+
+                <input type="radio" id="not_scheduled" name="scheduled_state" value="not_scheduled" onclick='handleChangeScheduled(this);'>
+                <label for="not_scheduled">Not Scheduled</label><br><br>
+
+                <input type="submit" value="Submit">
+            </form>
+            <script>
+                function handleChangeScheduled(radioState) {
+                    const queryString = new URLSearchParams({ scheduled_state: `${radioState.value}` }).toString();
+                    const experience_state_url = `/get-experiences-filter?${queryString}`;
+                    fetch(experience_state_url)
+                        .then((response) => response.json())
+                        .then((expInfoResultsJson) => {
+                            console.log(expInfoResultsJson);
+                            loadExperiences(expInfoResultsJson);
+                        });
+                }
+
+                function loadExperiences(experiences) {
+                    experienceList = document.querySelector("#experience-list");
+                    experienceList.innerHTML = "";
+                    for(const experience of experiences) {
+                        console.log(experience["exp_id"]);
+                        experienceList.insertAdjacentHTML('beforeend', `
+                        <div id="show-itinerary${experience["exp_id"]}">
+                            <ul>
+                                <li><a href="${experience["exp_url"]}">${experience["exp_name"]}</a><br><br></li>
+                                <img src="${experience["exp_image"]}" width="300" height="300"><br><br>
+
+                                {% if itn_owner %}
+                                <button type="button" id="${experience["exp_id"]}"
+                                    onclick="deleteExperience(id)">Delete</button><br><br>
+                                <button type="button" id="${experience["exp_id"]}" onclick="scheduleExperience(id)">Schedule
+                                    experience</button>
+                                {% endif %}
+                            </ul>
+                        </div>`
+                        );
+                    }
+                }
+
+                function scheduleExperience(id) {
+                    console.log("Hi Hazel: " + id);
+                }
+            </script>
+        </div>
+        <div id="experience-list">
             {% for experience in itn_info["experiences"] %}
             <div id="show-itinerary{{experience["exp_id"]}}">
-            <ul>
-                <li><a href="{{experience["exp_url"]}}">{{experience["exp_name"]}}</a><br><br></li>
-                <img src = "{{experience["exp_image"]}}"  width="300" height="300"><br><br>
+                <ul>
+                    <li><a href="{{experience["exp_url"]}}">{{experience["exp_name"]}}</a><br><br></li>
+                    <img src="{{experience["exp_image"]}}" width="300" height="300"><br><br>
 
-                {% if itn_owner %}
-                <button type="button" id="{{experience["exp_id"]}}" onclick="deleteExperience(id)">Delete</button><br><br>
-                {% endif %}
-            </ul>
-        </div>
+                    {% if itn_owner %}
+                    <button type="button" id="{{experience["exp_id"]}}"
+                        onclick="deleteExperience(id)">Delete</button><br><br>
+                    <button type="button" id="{{experience["exp_id"]}}" onclick="scheduleExperience(id)">Schedule
+                        experience</button>
+                    {% endif %}
+                </ul>
+            </div>
             {% endfor %}
+        </div>
+        
         {% endif %}
-       
+
     </div>
 </div>
 <script>
     function deleteExperience(id) {
         console.log(id);
-        document.querySelector("#show-itinerary"+id).innerHTML = "";
-        
-        const queryString = new URLSearchParams({ expId: `${id}`}).toString();
+        document.querySelector("#show-itinerary" + id).innerHTML = "";
+
+        const queryString = new URLSearchParams({ expId: `${id}` }).toString();
         const url = `/delete-experience?${queryString}`;
 
         fetch(url)
@@ -60,4 +121,3 @@
 
 <script type="text/jsx" src="/static/js/travelNotes.jsx"></script>
 {% endblock %}
-

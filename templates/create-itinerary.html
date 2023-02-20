@@ -19,8 +19,14 @@
                     if(month < 10) month = "0" + month;
                     if(day < 10) day = "0" + day;
                     today = year + "-" + month + "-" + day;
-                    document.getElementById("start").setAttribute('min', today);
-                    document.getElementById("end").setAttribute('min', today);
+                    let start_date = document.getElementById("start");
+                    start_date.setAttribute('min', today);
+                    let end_date = document.getElementById("end")
+                    end_date.setAttribute('min', today);
+                    // if (end_date < start_date) {
+                    //     end_date.setAttribute('min', start_date);
+                    //     start_date.setAttribute('min', end_date);
+                    // }
                 </script>
 
                 <p>Do you want to share your itinerary?</p>

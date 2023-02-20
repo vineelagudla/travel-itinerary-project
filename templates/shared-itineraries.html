@@ -1,18 +1,37 @@
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block body %}
 
-<div style= text-align:center>
+<div style=text-align:center>
     <div id="view-itinerary">
-       
+
         {% for shared_itn in shared_itns %}
-        
-        <a href="/show_itinerary?itn_id={{shared_itn["itn_id"]}}">
-            <button type="button">{{shared_itn["itn_name"]}}</button><br><br>
-        </a>
-        {% endfor %}
-        
+        <div id="copy-itinerary{{shared_itn["itn_id"]}}">
+
+            <a href="/show_itinerary?itn_id={{shared_itn["itn_id"]}}">
+                <button type="button">{{shared_itn["itn_name"]}}</button><br><br>
+            </a>
+            <button type="button" id="{{shared_itn["itn_id"]}}" onclick="copyItinerary(id)">Copy</button><br><br>
+            {% endfor %}
+        </div>
     </div>
 </div>
+
+<script>
+    function copyItinerary(id) {
+
+        console.log(id);
+        const queryString = new URLSearchParams({ itnId: `${id}` }).toString();
+        const url = `/copy-itinerary?${queryString}`;
+
+        location.assign(url);
+
+        // fetch(url)
+        //     .then((response) => response.text())
+        //     .then((response) => {
+                
+        //     });
+    }
+</script>
 
 {% endblock %}
