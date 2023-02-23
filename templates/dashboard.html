@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
 
 <!--This is loading the actual CSS-->
+<link href="/static/css/dashboard.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/css/carousel.css">
 
 <!--This is for JS-->
@@ -14,85 +15,93 @@
 {% endblock %}
 
 {% block body %}
-<div>
-    <h2>Welcome! {{fname}}</h2>
+
+<div id="bg-img">
+    <div class="container-main">
+        <div class="itinerary-container">
+            <div class="row">
+                <div class="col">
+                    <form action="/create-itinerary">
+                        <div style=text-align:center>
+                            <button class="big-btn" id="owned-itineraries-btn">Create your Itinerary</button><br><br>
+                            <!-- <input type="submit" value="Create New Itinerary"><br><br>
+                                <br><br> -->
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="col">
+
+                    <form action="/view-itineraries">
+                        <div style=text-align:center>
+                            {% if owned_itn_count > 0 %}
+                            <button class="big-btn" id="owned-itineraries-btn">View Owned Itineraries</button><br><br>
+                            {% else %}
+                            <button class="big-btn" id="owned-itineraries-btn" disabled>View Owned
+                                Itineraries</button><br><br>
+                            {% endif %}
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="col">
+                    <form action="/public-itineraries">
+                        <div style=text-align:center>
+                            {% if public_itn_count > 0 %}
+                            <button class="big-btn" id="public-itineraries-btn">View Public Itineraries</button><br><br>
+                            {% else %}
+                            <button class="big-btn" id="public-itineraries-btn" disabled>View Public
+                                Itineraries</button><br><br>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col">
+                    <form action="/friends-itineraries">
+                        <div style=text-align:center>
+                            {% if friends_itn_count > 0 %}
+                            <button class="big-btn" id="friends-itineraries-btn">View Friends
+                                Itineraries</button><br><br>
+                            {% else %}
+                            <button class="big-btn" id="friends-itineraries-btn" disabled>View Friends
+                                Itineraries</button><br><br>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<!-- <div class="user-profile">
-    <ul>First Name: {{fname}}</ul>
-    <ul>Last Name: {{lname}}</ul>
-    <ul>Email Address: {{email}}</ul>
-</div> -->
-
-<!-- Shows create itinerary button -->
-<form action="/create-itinerary">
-    <div style=text-align:center>
-        <input type="submit" value="Create New Itinerary"><br><br>
-    </div>
-</form>
-
-<!-- View owned itineraries button -->
-<form action="/view-itineraries">
-    <div style=text-align:center>
-        {% if owned_itn_count > 0 %}
-        <button id="owned-itineraries-btn">View Owned Itineraries</button><br><br>
-        {% else %}
-        <button id="owned-itineraries-btn" disabled>View Owned Itineraries</button><br><br>
-        {% endif %}
-    </div>
-</form>
-
-<!-- View public itineraries button -->
-<form action="/public-itineraries">
-    <div style=text-align:center>
-        {% if public_itn_count > 0 %}
-        <button id="public-itineraries-btn">View Public Itineraries</button><br><br>
-        {% else %}
-        <button id="public-itineraries-btn" disabled>View Public Itineraries</button><br><br>
-        {% endif %}
-    </div>
-</form>
-
-<!-- View friends itineraries button -->
-<form action="/friends-itineraries">
-    <div style=text-align:center>
-        {% if friends_itn_count > 0 %}
-        <button id="friends-itineraries-btn">View Friends Itineraries</button><br><br>
-        {% else %}
-        <button id="friends-itineraries-btn" disabled>View Friends Itineraries</button><br><br>
-        {% endif %}
-    </div>
-</form>
-
 <section id="slider">
     <div class="container">
         <div class="subcontainer">
             <div class="slider-wrapper">
                 <div class="controller">
-                    <div>
+                    <div class="controller text">
                         <h5>Public Itineraries</h5>
                     </div>
                     <div id="controls">
                         <button class="previous"><i class="fa-solid fa-angle-left"></i></button>
-                        <button class="next"><i class="fa-solid fa-angle-right"></i></button><br><br>
-                        <h6><a href="/public-itineraries?">Show all</a></h6>
+                        <button class="next"><i class="fa-solid fa-angle-right"></i></button>
+                        <br><br>
+                        <!-- <div ><a class="more" href="/public-itineraries?">Show all</a></h6></div> -->
                     </div>
                 </div>
                 <br>
                 <div class="my-slider" id="itn-slider">
-                    <ul> 
-                        
+                    <ul>
+
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <script src="/static/js/carousel.js"></script>
-
 {% endblock %}
 
-{% block homebutton %}
-
-{% endblock %}
+{% block homebutton %} {% endblock %}

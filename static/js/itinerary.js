@@ -49,6 +49,7 @@ function initMap() {
           const imageUrl = parsedResults[index]["image_url"]
           latLong["image"] = imageUrl;
           const reviews = parsedResults[index]["review_count"];
+          const rating = parsedResults[index]["rating"];
           const location = parsedResults[index]["location"]["display_address"];
           latLong["location"] = location;
           const latitude = parsedResults[index]["coordinates"]["latitude"];
@@ -59,20 +60,34 @@ function initMap() {
           latLong["longitude"] = longitude;
           latLongDict.push(latLong);
 
+          let resultDiv = "";
 
-          displaySearch.insertAdjacentHTML('beforeend', `<b><a href=${expUrl} target="_blank">${name}</a><br><br></b>`);
-          displaySearch.insertAdjacentHTML('beforeend', `<img src=${imageUrl} width="300" height="300">`);
-          displaySearch.insertAdjacentHTML('beforeend', `<li>Reviews: ${reviews}</li>`);
-          displaySearch.insertAdjacentHTML('beforeend', `<li>Location: ${location}</li>`);
-          displaySearch.insertAdjacentHTML('beforeend', `<li>Latitude: ${latitude}</li>`);
-          displaySearch.insertAdjacentHTML('beforeend', `<li>Longitude: ${longitude}</li><br>`);
+          resultDiv +=  `<div class="exp-results">`;
+          resultDiv += `<b><a href=${expUrl} target="_blank">${name}</a><br><br></b>`;
+          resultDiv += `<img src=${imageUrl} width="250" height="250">`;       
+          resultDiv += `<li>Reviews: ${reviews}</li>`; 
+          resultDiv += `<li>Rating: ${rating}</li>`; 
+          resultDiv += `<li>Location: ${location}</li>`; 
+          resultDiv += `<button id="add-itinerary-btn${index}">Add to Itinerary</button><br><br>`; 
+          resultDiv +=  `</div>`;
 
-          displaySearch.insertAdjacentHTML('beforeend', `<button id="add-itinerary-btn${index}">Add to Itinerary</button><br><br>`);
+          displaySearch.insertAdjacentHTML('beforeend', resultDiv);
+          // displaySearch.insertAdjacentHTML('beforeend', `<div>`);
+          // displaySearch.insertAdjacentHTML('beforeend', `<b><a href=${expUrl} target="_blank">${name}</a><br><br></b>`);
+          // displaySearch.insertAdjacentHTML('beforeend', `<img src=${imageUrl} width="250" height="250">`);
+          // displaySearch.insertAdjacentHTML('beforeend', `<li>Reviews: ${reviews}</li>`);
+          // displaySearch.insertAdjacentHTML('beforeend', `<li>Rating: ${rating}</li>`);
+          // displaySearch.insertAdjacentHTML('beforeend', `<li>Location: ${location}</li>`);
+          // // displaySearch.insertAdjacentHTML('beforeend', `<li>Latitude: ${latitude}</li>`);
+          // // displaySearch.insertAdjacentHTML('beforeend', `<li>Longitude: ${longitude}</li><br>`);
+          // displaySearch.insertAdjacentHTML('beforeend', `<button id="add-itinerary-btn${index}">Add to Itinerary</button><br><br>`);
+
+          // displaySearch.insertAdjacentHTML('beforeend', `</div>`);
 
           const addItineraryBtn = document.querySelector(`#add-itinerary-btn${index}`);
 
           addItineraryBtn.addEventListener("click", (evt) => {
-            const queryString = new URLSearchParams({ name: `${name}`, expUrl: `${expUrl}`, image: `${imageUrl}`, location: `${location}`, latitude: `${latitude}`, longitude: `${longitude}` }).toString();
+            const queryString = new URLSearchParams({ name: `${name}`, expUrl: `${expUrl}`, image: `${imageUrl}`, location: `${location}`, latitude: `${latitude}`, longitude: `${longitude}`, rating:`${rating}` }).toString();
             const url = `/load-itinerary?${queryString}`;
 
             addItineraryBtn.disabled = true;
@@ -127,8 +142,6 @@ function initMap() {
       );
     }
 
-
-
     //Content to put in the marker infoWindow
     for (const marker of markers) {
       const markerInfoContent = `
@@ -144,13 +157,7 @@ function initMap() {
           Address:
             <code>${marker.location}.</code><br>
         </p>
-        <p>
-          Located at: 
-            <code>${marker.position.lat()}</code>,
-            <code>${marker.position.lng()}</code>
-        </p>
       `;
-
       //eventListner for marker clicks
       marker.addListener('click', () => {
         //closes previous infoWindow

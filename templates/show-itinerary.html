@@ -9,103 +9,143 @@
 
 {% endblock %} -->
 
+{% block head %}
+    <link href="/static/css/view-itinerary.css" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
-
-<div style=text-align:left>
+<div class="container-itinerary">
     <div id="show-itinerary">
-        <h3>{{itn_info["itn_name"]}}</h3>
-        {% if itn_info["itn_location"] %}
-        <b>Location: </b>{{itn_info["itn_location"]}}<br>
-        {% endif %}
-        <b>Start Date: </b>{{itn_info["start_date"]}}<br>
-        <b>End Date: </b>{{itn_info["end_date"]}}<br><br>
+        <div class="row">
+            <div class="row">
+                <h4><label class="main-title">Trip Details</label></h4>
+            </div>
 
-        <div id="root">
+            <div class="trip-details">
+                <div class="row">
+                    <div class="col">
+                        <div class="trip-name">
+                            <b>Name: {{itn_info["itn_name"]}}</b>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="trip-date"><b>Start Date: </b>{{itn_info["start_date"]}}<br></div>
+                    </div>
+                    <div class="col">
+                        <div class="trip-date"><b>End Date: </b>{{itn_info["end_date"]}}<br><br></div>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div id="root">
+                    </div>
+                </div>
+            </div>
         </div>
-
-        {% if itn_info["experiences"] | length > 0 %}
-
-        <b>Experiences: </b><br><br>
-        <div class="fliter-experiences">
-            Filter by<br><br>
-        
-            <form>
-                <input type="radio" id="scheduled" name="scheduled_state" value="scheduled" onclick='handleChangeScheduled(this);'>
-                <label for="scheduled">Scheduled Experiences</label><br>
-
-                <input type="radio" id="all" name="scheduled_state" value="all" checked="true" onclick='handleChangeScheduled(this);'>
-                <label for="all">All Experiences</label><br>
-
-                <input type="radio" id="not_scheduled" name="scheduled_state" value="not_scheduled" onclick='handleChangeScheduled(this);'>
-                <label for="not_scheduled">Not Scheduled</label><br><br>
-
-                <input type="submit" value="Submit">
-            </form>
-            
-        </div>
-        <div id="experience-list">
-
-        </div>
-        
-        {% endif %}
-
-        <script>
-            function handleChangeScheduled(radioState) {
-                loadExperiences(radioState.value);
-            }
-
-            function loadExperiences(scheduledState) {
-                const queryString = new URLSearchParams({ scheduled_state: `${scheduledState}` }).toString();
-                const experience_state_url = `/get-experiences-filter?${queryString}`;
-                fetch(experience_state_url)
-                    .then((response) => response.json())
-                    .then((expInfoResultsJson) => {
-                        experienceList = document.querySelector("#experience-list");
-                        experienceList.innerHTML = "";
-                        for(const experience of expInfoResultsJson) {
-                            console.log(experience["exp_id"]);
-                            experienceList.insertAdjacentHTML('beforeend', `
-                            <div id="show-itinerary${experience["exp_id"]}">
-                                <ul>
-                                    <li><a href="${experience["exp_url"]}">${experience["exp_name"]}</a><br><br></li>
-                                    <img src="${experience["exp_image"]}" width="300" height="300"><br><br>
-
-                                    {% if itn_owner %}
-                                    <button type="button" id="${experience["exp_id"]}"
-                                        onclick="deleteExperience(id)">Delete</button><br><br>
-                                    <button type="button" id="${experience["exp_id"]}" onclick="scheduleExperience(id)">Schedule
-                                        experience</button>
-                                    
-                                    <input type="date" id="schedule" name="schedule" value="yyyy-mm-dd"><br><br>
-                                    
-                                    {% endif %}
-                                </ul>
-                            </div>`
-                            );
-                        }
-                    });
-                
-            }
-
-            function scheduleExperience(id) {
-                scheduledDate = document.querySelector("#schedule");
-                console.log(id);
-                const queryString = new URLSearchParams({ exp_id: `${id}`, schedule_date: `${scheduledDate.value}` }).toString();
-                const experience_state_url = `/schedule-experience?${queryString}`;
-                fetch(experience_state_url)
-                    .then((response) => response.text())
-                    .then((scheduledExpResult) => {
-                        console.log("Experience scheduled");
-                    });
-            }
-
-            loadExperiences("all");
-        </script>
-
     </div>
 </div>
+
+<div class="container-experiences">
+    <div id="show-experiences">
+        {% if itn_info["experiences"] | length > 0 %}
+
+        <h5>Experiences</h5>
+        <div class="fliter-experiences">
+            <form>
+                Filter by &nbsp;&nbsp;
+                <input type="radio" id="scheduled" name="scheduled_state" value="scheduled"
+                    onclick='handleChangeScheduled(this);'>
+                <label for="scheduled">Scheduled&nbsp;&nbsp;</label>
+
+                <input type="radio" id="all" name="scheduled_state" value="all" checked="true"
+                    onclick='handleChangeScheduled(this);'>
+                <label for="all">All&nbsp;&nbsp;</label>
+
+                <input type="radio" id="not_scheduled" name="scheduled_state" value="not_scheduled"
+                    onclick='handleChangeScheduled(this);'>
+                <label for="not_scheduled">Not Scheduled</label>
+
+                <!-- <input type="submit" value="Submit"> -->
+            </form>
+        </div>
+        <br>
+        <div class="overflow-auto p-3">
+            <div id="experience-list">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
 <script>
+    function handleChangeScheduled(radioState) {
+        loadExperiences(radioState.value);
+    }
+
+    function loadExperiences(scheduledState) {
+        const queryString = new URLSearchParams({ scheduled_state: `${scheduledState}` }).toString();
+        const experience_state_url = `/get-experiences-filter?${queryString}`;
+        fetch(experience_state_url)
+            .then((response) => response.json())
+            .then((expInfoResultsJson) => {
+                experienceList = document.querySelector("#experience-list");
+                experienceList.innerHTML = "";
+                for(const experience of expInfoResultsJson) {
+                    console.log(experience["exp_id"]);
+                    experienceList.insertAdjacentHTML('beforeend', `
+                    <div id="show-itinerary${experience["exp_id"]}">
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-4">
+                                <img src="${experience["exp_image"]}" width="250" height="250"><br><br>
+                            </div>
+                            <div class="col-4">
+                                <br>
+                                <div class="row">
+                                    <a href="${experience["exp_url"]}">${experience["exp_name"]}</a><br><br>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+                                        <div class="row-1">
+                                            {% if itn_owner %}
+                                            <button class="exp-btn" type="button" id="${experience["exp_id"]}"
+                                                onclick="deleteExperience(id)">Delete Experience</button><br><br>
+                                        </div>
+                                        <div class="row-1">
+                                            <button class="exp-btn" type="button" id="${experience["exp_id"]}" onclick="scheduleExperience(id)">Schedule
+                                                Experience</button>
+                                            <input class="exp-btn" type="date" id="schedule" name="schedule" value="yyyy-mm-dd"><br><br>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                    </div>`
+                    );
+                }
+            });
+        
+    }
+
+    function scheduleExperience(id) {
+        scheduledDate = document.querySelector("#schedule");
+        console.log(id);
+        const queryString = new URLSearchParams({ exp_id: `${id}`, schedule_date: `${scheduledDate.value}` }).toString();
+        const experience_state_url = `/schedule-experience?${queryString}`;
+        fetch(experience_state_url)
+            .then((response) => response.text())
+            .then((scheduledExpResult) => {
+                console.log("Experience scheduled");
+            });
+    }
+
+    loadExperiences("all");
+
     function deleteExperience(id) {
         console.log(id);
         document.querySelector("#show-itinerary" + id).innerHTML = "";

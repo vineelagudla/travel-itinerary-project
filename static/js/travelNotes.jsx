@@ -1,3 +1,5 @@
+// import Button from 'react-bootstrap/Button';
+// import Collapse from 'react-bootstrap/Collapse';
 
 function TravelNotes(props) {
 
@@ -51,33 +53,44 @@ function TravelNotes(props) {
 
     return (
         <div className="TravelNotes">
-            <b><label htmlFor="add notes" className="add-notes">Notes:</label></b>
-            <input
-                type="text"
-                //<textarea
-                className="add-notes"
-                id="note"
-                name="note"
-                placeholder="Add notes to your trip"
-                onChange={handleChange}
-                value={note}
-            />
-            <button className="notes-btn" onClick={handleAddNotesClick}>Add notes</button>
-            <br></br>
-            <br></br>
-            <label>
-                <b>Show my notes:
-                    <textarea
-                        className="show-notes"
-                        name="notes-ta"
-                        onChange={handleNewNote}
-                        value={newNotes}
-                        
-                    /></b>
-            </label>
-            <br></br>
-            <button className="update-notes-btn" onClick={handleUpdateNotesClick}>Update notes</button>
-            <br></br><br></br>
+            <div className="row">
+                <div className="col-4">
+                    <b><label htmlFor="add notes" className="add-notes">Note&nbsp;&nbsp;</label></b>
+                    <input
+                        type="text"
+                        //<textarea
+                        className="add-notes"
+                        id="note"
+                        name="note"
+                        placeholder="Add notes to your trip"
+                        onChange={handleChange}
+                        value={note}
+                    />
+                    <button className="notes-btn" onClick={handleAddNotesClick}>+</button>
+                    <br></br>
+                    <br></br>
+                </div>
+                <div className="col-6">
+                    <div className="row">
+                        <div className="col-3">
+                            Trip Notes
+                        </div>
+                        <div className="col-7">
+                            <textarea
+                                name="notes-ta"
+                                onChange={handleNewNote}
+                                value={newNotes}
+                                cols={25}
+                            />
+                        </div>
+                        <div className="col-2">
+                            <button className="update-notes" onClick={handleUpdateNotesClick}>&nbsp;Update Notes</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-2"></div>
+                <br></br><br></br>
+            </div>
         </div>
     );
 }

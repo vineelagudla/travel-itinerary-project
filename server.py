@@ -230,6 +230,9 @@ def view_itineraries():
     user_id = session["user"]["user_id"]
     itn_lst = crud.get_user_itineraries(user_id)
 
+    print(user_id)
+    print(itn_lst)
+
     return render_template('view-itineraries.html', itn_lst=itn_lst)
 
 

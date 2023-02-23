@@ -33,8 +33,6 @@ function testDict() {
                     latLong["longitude"] = longitude;
                     latLongDict.push(latLong);
                 }
-                console.log(latLongDict);
-
                 
                 initMap();
             });

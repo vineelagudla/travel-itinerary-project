@@ -3,7 +3,9 @@ h2 {
 }
 
 body {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  background-color:rgba(255, 255, 255, 0.7);
+  font-family: 'Ubuntu', sans-serif;
+  
 }
 
 .login {
@@ -21,4 +23,38 @@ body {
 
 .card {
   height: 500px;
+}
+
+.navbar-logo {
+  float: left;
+  padding: 15px;
+  text-align: center;
+  width: 100%;
+}
+.navbar-brand {
+  float:none;
+  padding-left: 185px;
+}
+
+.navbar {
+  background-color:rgba(255, 255, 255, 0.7);
+}
+
+/* label {
+  width: 100px;
+} */
+
+.create-page {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  position: fixed;
+    width:600px;
+    height:480px;
+    background-color:rgba(245, 242, 236, 0.8);
+    padding:75px;
+    left: calc(-50vw + 50%);
+    right: calc(-50vw + 50%);
+    border: 5ex;
+
 }

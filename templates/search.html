@@ -1,46 +1,38 @@
-{% extends  'base.html' %}
+{% extends 'base.html' %}
 
-{%block head %} 
+{% block head %}
 
-    <style>
-        html, body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        }
-        
-        .map,
-        #map {
-        width: 100%;
-        height: 100%;
-        }
-    </style>
+<link href="/static/css/search.css" rel="stylesheet">
 
 {% endblock %}
 
 {% block body %}
+<br>
 <div class="container">
     <!-- <h2><span id="search-title">Search activities for </span> {{itn_name}} </h2> -->
-    <div style= text-align:center>
-        Search for 
-        <input id="search-for-experience" type="text" name="experience">
-        in 
-        <input id="search-location" type="text" name="location">
-        <button id="search-button">Search</button>
-        <br><br>
+    <div class="container-search" style=text-align:center>
+        <b>Search for
+            <input id="search-for-experience" type="text" name="experience">
+            in
+            <input id="search-location" type="text" name="location">
+            <button id="search-button">Search</button>
+        </b>
     </div>
+    <br>
     <div class="row">
         <div class="col-4">
-            <div style= text-align:left>
-                <ul id="display-search">
-                
-                </ul>
+            <div style=text-align:left>
+                <div class="overflow-auto">
+                    <ul id="display-search">
+
+                    </ul>
+                </div>
             </div>
         </div>
-   
+
         <div class="col-8">
             <!--Display map on search page-->
-            <div class ="card sticky-top" >    
+            <div class="card sticky-top">
                 <section class="map">
                     <div id="map">
 
@@ -49,19 +41,13 @@
             </div>
         </div>
     </div>
-</div>   
+</div>
 <!-- <script src="/static/js/maps.js"></script> -->
 
-<script
-  async
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxh3VRiB58C0g1v94qTVrz3crsqTNt23c&callback=initMap">
-</script>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxh3VRiB58C0g1v94qTVrz3crsqTNt23c&callback=initMap">
+    </script>
 
 <script src="/static/js/itinerary.js"></script>
 
 {% endblock %}
-
-
-
-
-

@@ -1,35 +1,48 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<link href="/static/css/view-itinerary.css" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
 
-<table class="table-center">
-    <div id="view-itinerary">
 
-        {% for itn in itn_lst %}
-        <tr id="hide-itinerary{{itn["itn_id"]}}">
-            <td><a href="/show_itinerary?itn_id={{itn["itn_id"]}}">
-                <button type="button">{{itn["itn_name"]}}</button><br><br>
-            </a></td>
-            <td>
-                <a href="/search?itn_id={{itn["itn_id"]}}"><button type="button">Edit</button><br><br></a></td>
-            <td><button type="button" id="{{itn["itn_id"]}}" onclick="deleteItinerary(id)">Delete</button><br><br></td>
-        </tr>
-      
-        {% endfor %}
+    <div class="view-itinerary">
+        <div class="view-itinerary-inner">
+            <table class="table-center"><br>
+            {% for itn in itn_lst %}
+            <tr class="view-itinerary-sub-inner" id="hide-itinerary{{itn["itn_id"]}}">
+                <td>
+                    <a href="/show_itinerary?itn_id={{itn["itn_id"]}}">
+                        <button class="itn-name" type="button">{{itn["itn_name"]}}</button>
+                        <br><br>
+                    </a>
+                </td>
+                <td>
+                    <a href="/search?itn_id={{itn["itn_id"]}}"><button class="itn-name" type="button">Edit</button><br><br></a>
+                </td>
+                <td>
+                    <button class="itn-name" type="button" id="{{itn["itn_id"]}}" onclick="deleteItinerary(id)">Delete</button>
+                    <br><br>
+                </td>
+            </tr>
 
+            {% endfor %}
+            </table>
+        </div>
     </div>
-    <script>
-        function deleteItinerary(id) {
-            document.querySelector("#hide-itinerary"+id).innerHTML = "";
-            
-            const queryString = new URLSearchParams({ itnId: `${id}`}).toString();
-            const url = `/delete-itinerary?${queryString}`;
+        <script>
+            function deleteItinerary(id) {
+                document.querySelector("#hide-itinerary" + id).innerHTML = "";
 
-            fetch(url)
-                .then((response) => response.text())
-                .then((response) => {
-                });
-        }
-    </script>
-</table>
+                const queryString = new URLSearchParams({ itnId: `${id}` }).toString();
+                const url = `/delete-itinerary?${queryString}`;
+
+                fetch(url)
+                    .then((response) => response.text())
+                    .then((response) => {
+                    });
+            }
+        </script>
+
 {% endblock %}

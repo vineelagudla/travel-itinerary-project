@@ -5,69 +5,95 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>
-    {% block title %}reCreate Itinerary{% endblock %}
+    {% block title %}Rip & Trip{% endblock %}
   </title>
 
-  {% block head %}{% endblock %}
+  {% block head %} {% endblock %}
 
   <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
-  
+
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" 
+    />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <!--font CSS-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300&display=swap" rel="stylesheet"> -->
+
+  <link rel="shortcut icon" href="/static/img/suitcase-logo.png" />
   <link href="/static/css/travel-itinerary.css" rel="stylesheet">
 </head>
 
 <body>
-  <h2>(re)Create Itinerary</h2>
 
-  {% block homebutton %}
+{% block navbar %}
+  <!-- Static navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <div class="navbar-logo">
 
-  <form action="/">
-    <div style=text-align:left>
-      <input type="submit" id="home-button" value="Home"><br><br>
-    </div>
-  </form>
+          <a class="navbar-brand mb-1 ms-2"><img src="/static/img/suitcase-logo.png" 
+            width="25" height="25" class="d-inline-block align-text-top">
+            Rip and Trip
+          </a>
 
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        > 
+        <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+          <ul class="navbar-nav mb-2 mb-lg-2">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user-profile">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </div>
+      </div>
+    </nav>
   {% endblock %}
 
-  {% block userprofile %}
+  {% block body %} {% endblock %}
 
-  <form action="/user-profile">
-    <div style=text-align:right>
-      <button class="user-profile">Profile</button><br><br>
-    </div>
-  </form>
+  {% block js %} {% endblock %}
 
-  {% endblock %}
-
-  {% block body %}
-
-  {% endblock %}
-
-  {% block logout %}
-
-  <form action="/logout">
-    <div style=text-align:center>
-      <input type="submit" value="Logout">
-    </div>
-  </form>
-
-  {% endblock %}
-
-  {% block js %}
-  {% endblock %}
-
+  <!-- Random Color JavaScript Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js"></script>
+  
   <!-- Bootstrap JavaScript Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
     crossorigin="anonymous"></script>
-  <!-- Random Color JavaScript Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js"></script>
 </body>
 
 </html>

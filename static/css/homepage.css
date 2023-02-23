@@ -1,0 +1,51 @@
+body {
+  background: url("/static/img/camera.jpg") no-repeat center center;
+  background-size: cover;
+  backdrop-filter: blur(5px);
+  height: 100vh;
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  position: relative;
+}
+
+.login-container {
+  position: relative;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  top: 100px;
+  /* font-family: Arial, Helvetica, sans-serif; */
+}
+
+
+.login-container-inner {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background-color: rgba(245, 242, 236, 0.8);
+  padding: 10px;
+  left: calc(-50vw + 50%);
+  right: calc(-50vw + 50%);
+  border: 5ex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+label {
+  width: 100px;
+}
+
+.message {
+  color: #fabb62;
+  font-weight: 300;
+}
+
+.btwn {
+  background-color: rgb(250, 187, 98);
+  border-radius: 10px;
+  width: 100px;
+  height: 35px;
+}
