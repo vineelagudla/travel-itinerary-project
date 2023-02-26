@@ -6,22 +6,30 @@
 
 {% block body %}
 
-<div class="shared-itineraries">
-    <div class="shared-itineraries-inner">
-        <table class="table-center">
-                {% for shared_itn in shared_itns %}
-                    <tr id="copy-itinerary{{shared_itn["itn_id"]}}">
-                        <td>
-                            <a href="/show_itinerary?itn_id={{shared_itn["itn_id"]}}">
-                            <button class="itn-name" type="button">{{shared_itn["itn_name"]}}</button><br><br>
-                            </a>
-                        </td>
-                        <td>
-                            <button class="itn-name" type="button" id="{{shared_itn["itn_id"]}}" onclick="copyItinerary(id)">Copy</button><br><br>
-                        </td>
-                    </tr>
-                {% endfor %}
-        </table>
+<div class="view-itinerary">
+    <div class="view-itinerary-inner">
+        {% if shared_state == 'public' %}
+            <h5>Public itineraries</h5>
+        {% elif shared_state == 'friends' %}
+            <h5>Friends itineraries</h5>
+        {% endif %}
+        
+        <div class="overflow-auto p-3">
+            <table class="table-center">
+                    {% for shared_itn in shared_itns %}
+                        <tr id="copy-itinerary{{shared_itn["itn_id"]}}">
+                            <td>
+                                <a href="/show_itinerary?itn_id={{shared_itn["itn_id"]}}">
+                                <button class="view-itn-btn" type="button">{{shared_itn["itn_name"]}}</button><br><br>
+                                </a>
+                            </td>
+                            <td>
+                                <button class="view-itn-btn" type="button" id="{{shared_itn["itn_id"]}}" onclick="copyItinerary(id)">Copy</button><br><br>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            </table>
+        </div>
     </div>
 </div>
 

@@ -14,7 +14,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:rgba(250, 251, 251, 0.8);
+    background-color:rgba(255, 255, 255, 1);
     /* background-color:rgba(249, 216, 182, 0.7); */
     color: black;
     bottom: 0;
@@ -58,7 +58,7 @@ body {
     outline: none;
     transition: 0.7s ease-in-out;
     border: 3px solid white;
-    background-color: rgb(187, 132, 87);
+    background-color: rgb(250,187,98);
     box-shadow: 0 0 5px rgb(9, 9, 9);
 }
 

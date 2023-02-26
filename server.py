@@ -75,6 +75,18 @@ def user_profile():
 
     return render_template("user-profile.html", fname=fname, lname=lname, email=email)
 
+@app.route("/get-user-profile")
+def get_user_profile():
+    """User profile details"""
+
+    profile_info = {}
+    if "user" in session and session["user"] != None:
+        profile_info["fname"] = session["user"]["fname"]
+        profile_info["lname"] = session["user"]["lname"]
+        profile_info["email"] = session["user"]["email"]
+
+    return jsonify(profile_info)
+
 
 @app.route("/signup")
 def signup():
@@ -243,6 +255,9 @@ def show_itinerary():
     itn_owner = False
     user_id = session["user"]["user_id"]
     itn_id = request.args.get("itn_id")
+    if not itn_id:
+        itn_id =session["itinerary_id"] 
+        
     itn_info = crud.get_itinerary_details(itn_id)
     itn_user_id = itn_info["user_id"]
 
@@ -280,7 +295,7 @@ def public_itineraries():
     user_id = session["user"]["user_id"]
     public_itns = crud.get_public_itineraries(user_id)
 
-    return render_template('shared-itineraries.html', shared_itns=public_itns)
+    return render_template('shared-itineraries.html', shared_itns=public_itns, shared_state="public")
 
 
 @app.route("/public-itineraries-list")
@@ -311,7 +326,7 @@ def friends_itineraries():
     user_id = session["user"]["user_id"]
     friends_itns = crud.get_friends_itineraries(user_id)
 
-    return render_template('shared-itineraries.html', shared_itns=friends_itns)
+    return render_template('shared-itineraries.html', shared_itns=friends_itns, shared_state="friends")
 
 
 @app.route("/search-results")

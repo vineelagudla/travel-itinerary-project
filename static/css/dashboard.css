@@ -45,7 +45,7 @@ body {
     height: 200px;
     text-align: center;
     /* background-color:rgba(228, 199, 159, 0.8); */
-    background-color:rgba(255, 255, 255, 0.8);
+    background-color:rgba(255, 255, 255, 1);
     border-radius: 20px;
   }
 

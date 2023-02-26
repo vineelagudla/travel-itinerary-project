@@ -68,21 +68,10 @@ function initMap() {
           resultDiv += `<li>Reviews: ${reviews}</li>`; 
           resultDiv += `<li>Rating: ${rating}</li>`; 
           resultDiv += `<li>Location: ${location}</li>`; 
-          resultDiv += `<button id="add-itinerary-btn${index}">Add to Itinerary</button><br><br>`; 
+          resultDiv += `<button class="add-itinerary-btn" id="add-itinerary-btn${index}">Add to Itinerary</button><br><br>`; 
           resultDiv +=  `</div>`;
 
           displaySearch.insertAdjacentHTML('beforeend', resultDiv);
-          // displaySearch.insertAdjacentHTML('beforeend', `<div>`);
-          // displaySearch.insertAdjacentHTML('beforeend', `<b><a href=${expUrl} target="_blank">${name}</a><br><br></b>`);
-          // displaySearch.insertAdjacentHTML('beforeend', `<img src=${imageUrl} width="250" height="250">`);
-          // displaySearch.insertAdjacentHTML('beforeend', `<li>Reviews: ${reviews}</li>`);
-          // displaySearch.insertAdjacentHTML('beforeend', `<li>Rating: ${rating}</li>`);
-          // displaySearch.insertAdjacentHTML('beforeend', `<li>Location: ${location}</li>`);
-          // // displaySearch.insertAdjacentHTML('beforeend', `<li>Latitude: ${latitude}</li>`);
-          // // displaySearch.insertAdjacentHTML('beforeend', `<li>Longitude: ${longitude}</li><br>`);
-          // displaySearch.insertAdjacentHTML('beforeend', `<button id="add-itinerary-btn${index}">Add to Itinerary</button><br><br>`);
-
-          // displaySearch.insertAdjacentHTML('beforeend', `</div>`);
 
           const addItineraryBtn = document.querySelector(`#add-itinerary-btn${index}`);
 
@@ -107,7 +96,7 @@ function initMap() {
         const finishBtn = document.querySelector("#finish-itinerary"); finishBtn.disabled = true;
 
         finishBtn.addEventListener('click', () => {
-          location.assign("/view-itineraries");
+          location.assign("/show_itinerary");
         });
       });
   });

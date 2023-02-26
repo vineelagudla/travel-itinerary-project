@@ -8,6 +8,15 @@
         backdrop-filter: blur(8px);
         height: 100vh;
     }
+
+    .create-btn {
+    border-radius: 10px;
+    background-color: rgba(250, 187, 98, 0.4);
+    }
+
+    #name, #start, #end {
+        border-radius: 5px;
+    }
 </style>
 {% endblock %}
 
@@ -24,7 +33,7 @@
             </div>
 
             <div class="col-4">
-                <input type="text" name="itn_name" required>
+                <input id="name" type="text" name="itn_name" required>
             </div>
             <div class="col-2">
             </div>
@@ -70,7 +79,7 @@
         <div id="friends-email"></div>
 
         <div class="row-4">
-            <input type="submit" value="Create Itinerary">
+            <input class="create-btn" type="submit" value="Create Itinerary">
             <br><br>
         </div>
     </div>

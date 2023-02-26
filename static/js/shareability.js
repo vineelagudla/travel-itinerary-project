@@ -17,7 +17,7 @@ let friendsEmails = [];
 function enableFriendsShareability() {
     const friendsEmail = document.querySelector("#friends-email");
     friendsEmail.innerHTML = 'Enter your friend\'s email <input type="text" id="friend-email"> <button id="add-email">Add</button><br><br>';
-    friendsEmail.insertAdjacentHTML('beforeend', '<label style="vertical-align:middle">Added friends <textarea class="form-control" id="friends-email-tb" name="friends-email-ta" readonly></textarea></label><br>');
+    friendsEmail.insertAdjacentHTML('beforeend', '<label style="vertical-align:middle">Added friends <textarea class="form-control" id="friends-email-tb" name="friends-email-ta" readonly></textarea></label><br><br>');
 
     const addEmailButton = document.querySelector("#add-email");
     addEmailButton.addEventListener('click', function (evt) {

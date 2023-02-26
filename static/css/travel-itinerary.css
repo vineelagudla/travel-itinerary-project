@@ -3,9 +3,9 @@ h2 {
 }
 
 body {
-  background-color:rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.7);
   font-family: 'Ubuntu', sans-serif;
-  
+
 }
 
 .login {
@@ -31,13 +31,14 @@ body {
   text-align: center;
   width: 100%;
 }
+
 .navbar-brand {
-  float:none;
-  padding-left: 185px;
+  float: none;
+  padding-left: 260px;
 }
 
 .navbar {
-  background-color:rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 /* label {
@@ -49,12 +50,18 @@ body {
   margin-left: auto;
   text-align: center;
   position: fixed;
-    width:600px;
-    height:480px;
-    background-color:rgba(245, 242, 236, 0.8);
-    padding:75px;
-    left: calc(-50vw + 50%);
-    right: calc(-50vw + 50%);
-    border: 5ex;
+  width: 600px;
+  height: auto;
+  background-color:rgba(255, 255, 255, 1);
+  padding: 75px;
+  left: calc(-50vw + 50%);
+  right: calc(-50vw + 50%);
+  border: 5ex;
+  border-radius: 10px;
+  top:130px;
+  padding-left: 40px;
+}
 
+#add-email, #friend-email {
+  border-radius: 5px;
 }
