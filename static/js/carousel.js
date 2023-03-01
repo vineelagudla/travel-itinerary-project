@@ -32,7 +32,7 @@ fetch(url)
                         destintation = destintation[destintation.length - 2];
                     }
 
-                    mySlider.insertAdjacentHTML('beforeend', `<div><div class="slide"><div class="slide-img"><a href="show_itinerary?itn_id=${itnId}"><img src="${imgUrl}" width="230" height="130"></a> </div><br><div><h6><a href="show_itinerary?itn_id=${itnId}">${itnName}</a></h6><h5>${destintation}</h5></div></div></div>`);
+                    mySlider.insertAdjacentHTML('beforeend', `<div><div class="slide"><div class="slide-img"><a href="show_itinerary?itn_id=${itnId}"><img src="${imgUrl}" width="230" height="130"></a> </div><br><div><h6><a href="show_itinerary?itn_id=${itnId}">${itnName}</a></h6><h6>${destintation}</h6></div></div></div>`);
 
                     itnCount++;
                     if (itnCount >= publicItnCount) {

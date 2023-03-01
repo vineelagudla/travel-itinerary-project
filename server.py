@@ -9,6 +9,7 @@ from pprint import pprint
 from jinja2 import StrictUndefined
 import json
 from passlib.hash import argon2
+import os
 
 # configuring flask instance and jinja
 app = Flask(__name__)
@@ -213,7 +214,9 @@ def search():
 
     itn_name = crud.get_itinerary_details(itn_id)["itn_name"]
 
-    return render_template('search.html', itn_name=itn_name)
+    API_KEY = os.environ["API_KEY"]
+
+    return render_template('search.html', itn_name=itn_name, API_KEY=API_KEY)
 
 
 @app.route("/load-itinerary")
@@ -430,6 +433,9 @@ def copy_itinerary():
 
 
 if __name__ == "__main__":
+
+    os.system("source secrets.sh")
     # connect to db. Else, flask won't be able to access db.
     connect_to_db(app)
     app.run(host="0.0.0.0", debug=True)
+    

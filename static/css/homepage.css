@@ -25,13 +25,16 @@ body {
   position: absolute;
   width: 500px;
   height: 500px;
-  background-color: rgba(245, 242, 236, 0.8);
+  /* background-color: rgba(245, 242, 236, 0.8); */
   padding: 10px;
   left: calc(-50vw + 50%);
   right: calc(-50vw + 50%);
   border: 5ex;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 10px;
+  top: 50px;
+  background-color:rgba(255, 255, 255, 1);
 }
 
 label {
@@ -48,4 +51,8 @@ label {
   border-radius: 10px;
   width: 100px;
   height: 35px;
+}
+
+.text-box {
+  border-radius: 5px;
 }

@@ -63,3 +63,11 @@ body {
     padding-left: 20px;
     /* background-color: rgba(235, 76, 76, 0.8); */
   }
+
+  #finish-itinerary {
+    background-color:rgba(250,187,98,0.5);
+    border-radius: 10px;
+    width: 100px;
+    height: 35px;
+  }
+

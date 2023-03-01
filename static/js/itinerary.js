@@ -66,7 +66,7 @@ function initMap() {
           resultDiv += `<b><a href=${expUrl} target="_blank">${name}</a><br><br></b>`;
           resultDiv += `<img src=${imageUrl} width="250" height="250">`;       
           resultDiv += `<li>Reviews: ${reviews}</li>`; 
-          resultDiv += `<li>Rating: ${rating}</li>`; 
+          resultDiv += `<li>Rating: ${rating}<i class="fa-solid fa-star"></i></li>`; 
           resultDiv += `<li>Location: ${location}</li>`; 
           resultDiv += `<button class="add-itinerary-btn" id="add-itinerary-btn${index}">Add to Itinerary</button><br><br>`; 
           resultDiv +=  `</div>`;

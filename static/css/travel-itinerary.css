@@ -65,3 +65,7 @@ body {
 #add-email, #friend-email {
   border-radius: 5px;
 }
+
+.d-inline-block {
+  font-size: larger;
+}

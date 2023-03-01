@@ -23,7 +23,7 @@
                 <div class="col">
                     <form action="/create-itinerary">
                         <div style=text-align:center>
-                            <button class="big-btn" id="owned-itineraries-btn">Create your Itinerary</button><br><br>
+                            <button class="big-btn" id="owned-itineraries-btn"><h5><i class="fa-solid fa-circle-plus"></i></h5>Create Your Itinerary</button><br><br>
                             <!-- <input type="submit" value="Create New Itinerary"><br><br>
                                 <br><br> -->
                         </div>
@@ -36,10 +36,9 @@
                     <form action="/view-itineraries">
                         <div style=text-align:center>
                             {% if owned_itn_count > 0 %}
-                            <button class="big-btn" id="owned-itineraries-btn">View Owned Itineraries</button><br><br>
+                            <button class="big-btn" id="owned-itineraries-btn"><h5><i class="fa-solid fa-circle-user"></i></h5>View Owned Itineraries</button><br><br>
                             {% else %}
-                            <button class="big-btn" id="owned-itineraries-btn" disabled>View Owned
-                                Itineraries</button><br><br>
+                            <button class="big-btn" id="owned-itineraries-btn" disabled><h5><i class="fa-solid fa-circle-user"></i></h5>View Owned Itineraries</button><br><br>
                             {% endif %}
                         </div>
                     </form>
@@ -50,9 +49,9 @@
                     <form action="/public-itineraries">
                         <div style=text-align:center>
                             {% if public_itn_count > 0 %}
-                            <button class="big-btn" id="public-itineraries-btn">View Public Itineraries</button><br><br>
+                            <button class="big-btn" id="public-itineraries-btn"><h5><i class="fa-solid fa-earth-americas"></i></h5>View Public Itineraries</button><br><br>
                             {% else %}
-                            <button class="big-btn" id="public-itineraries-btn" disabled>View Public
+                            <button class="big-btn" id="public-itineraries-btn" disabled><h5><i class="fa-solid fa-earth-americas"></i></h5>View Public
                                 Itineraries</button><br><br>
                             {% endif %}
                         </div>
@@ -63,10 +62,10 @@
                     <form action="/friends-itineraries">
                         <div style=text-align:center>
                             {% if friends_itn_count > 0 %}
-                            <button class="big-btn" id="friends-itineraries-btn">View Friends
+                            <button class="big-btn" id="friends-itineraries-btn"><h5><i class="fa-solid fa-users"></i></h5>View Friends
                                 Itineraries</button><br><br>
                             {% else %}
-                            <button class="big-btn" id="friends-itineraries-btn" disabled>View Friends
+                            <button class="big-btn" id="friends-itineraries-btn" disabled><h5><i class="fa-solid fa-users"></i></h5>View Friends
                                 Itineraries</button><br><br>
                             {% endif %}
                         </div>
@@ -81,8 +80,8 @@
         <div class="subcontainer">
             <div class="slider-wrapper">
                 <div class="controller">
-                    <div class="controller text">
-                        <h5>Public Itineraries</h5>
+                    <div class="controller-text">
+                        <h6><a class="carousel-text" href="/public-itineraries">Public Itineraries</a></h6>
                     </div>
                     <div id="controls">
                         <button class="previous"><i class="fa-solid fa-angle-left"></i></button>

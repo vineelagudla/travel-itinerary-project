@@ -39,9 +39,9 @@ body {
     padding-top: 15px;
 }
 
-.text {
-    top: 20vh;
-    color: rgb(50, 46, 46);
+.carousel-text {
+    font-size: medium;
+    color:rgb(0, 0, 0);;
 }
 
 #controls i {
@@ -58,7 +58,7 @@ body {
     outline: none;
     transition: 0.7s ease-in-out;
     border: 3px solid white;
-    background-color: rgb(250,187,98);
+    background-color: rgb(0, 0, 0);
     box-shadow: 0 0 5px rgb(9, 9, 9);
 }
 
